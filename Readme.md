@@ -38,6 +38,9 @@
     * cargo run
   * for the client, use nc:
     * nc 127.0.0.1 6161 (Ctrl-C to exit)
+* tokio_async_block_return:
+  * type annotation in async closure
+  * generic error type in order to use ? in async func
 
 ### Hyper (http)
 
