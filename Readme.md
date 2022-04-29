@@ -18,6 +18,18 @@
 * rust_08_...: rust basics - struct / struct functions (e.g. ~ class methods)
 * rust_09_...: rust basics - traits
 * rust_10_...: rust basics - unit tests
+* rust_11_...: rust basics - traits 2 aka Box aka function return different Struct (impl trait Describe)
+* rust_12_...: rust basics - closures aka lambda
+* rust_13_...: rust basics - spawn thread(s) + map reduce example
+* rust_14_...: rust basics - channel to communicate between threads (mpsc: multi producer, single consumer)
+* rust_15_...: implementing an even number iterator + defaults for function arg
+* rust_16_...: another way to implement defaults for function arg (impl trait From / Default)
+* rust_17_...: rust basics - error handling + keyword: ?
+* rust_18_...: sharing a value between threads with Atomic Reference Counting (Arc)
+* rust_19_...: function that can return multi error types (complex - 4 != implementations)
+* rust_20_...: thread + Mutex (+ Arc)
+* rust_21_...: rust basics - enum (enum with data)
+* rust_22_...: impl Into for a struct
 
 ### Tokio
 
