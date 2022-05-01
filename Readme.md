@@ -30,6 +30,8 @@
 * rust_20_...: thread + Mutex (+ Arc)
 * rust_21_...: rust basics - enum (enum with data)
 * rust_22_...: impl Into for a struct
+* rust_23_...: generic function / struct
+* rust_24_...: implicit type conversion (coercion)
 
 ### Tokio
 
@@ -49,4 +51,3 @@
     * cargo run
   * run the client (or use curl, cmd line example in src files)
     * cargo run --example 03_client
-
