@@ -52,3 +52,9 @@
     * cargo run
   * run the client (or use curl, cmd line example in src files)
     * cargo run --example 03_client
+
+## Various crates
+
+* rust_crate_clap_O1: command line argument parsing
+  * cargo run -- --hostname=localhost -p=2222 --kind=http3
+* 
