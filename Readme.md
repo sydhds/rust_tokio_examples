@@ -31,7 +31,8 @@
 * rust_21_...: rust basics - enum (enum with data)
 * rust_22_...: impl Into for a struct
 * rust_23_...: generic function / struct
-* rust_24_...: implicit type conversion (coercion)
+* rust_24_...: implicit type conversion (coercion, complex)
+* rust_25_...: Path & PathBuf (filepath) + generic: (AsRef<Path>) / (Into<PathBuf>)
 
 ### Tokio
 
