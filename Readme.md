@@ -57,6 +57,9 @@
 * tokio_crate_loom_01: testing concurrent code under the C11 memory model
   * RUSTFLAGS="--cfg loom" cargo test --release
 
+* tokio_future_01..05
+  * from https://dev.to/mindflavor/rust-futures-an-uneducated-short-and-hopefully-not-boring-tutorial---part-1-3k3
+
 ### Hyper (http)
 
 * hyper_01_http_post: http server & client using hyper crate
@@ -78,7 +81,6 @@
 
 * rust_crate_thiserror_anyhow_01: handling error easily using thiserror or anyhow crates
   * cargo run
-
 
 
 
