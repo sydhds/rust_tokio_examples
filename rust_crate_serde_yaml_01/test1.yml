@@ -1,0 +1,7 @@
+points:
+  alice_pt:
+    x: 1.0
+    y: 2.0
+  bob_pt:
+    x: 1.5
+    y: 99.27
