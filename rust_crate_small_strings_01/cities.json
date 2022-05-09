@@ -1,0 +1,22 @@
+[
+  {
+    "city": "New York",
+    "rank": 1,
+    "state": "New York"
+  },
+  {
+    "city": "Los Angeles",
+    "rank": 2,
+    "state": "California"
+  },
+  {
+    "city": "Chicago",
+    "rank": 3,
+    "state": "Illinois"
+  },
+  {
+    "city": "Houston",
+    "rank": 4,
+    "state": "Texas"
+  }
+]

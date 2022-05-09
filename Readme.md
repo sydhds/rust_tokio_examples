@@ -31,7 +31,7 @@
 * rust_21_...: rust basics - enum (enum with data)
 * rust_22_...: impl Into for a struct
 * rust_23_...: generic function / struct
-* rust_24_...: implicit type conversion (coercion, complex)
+* rust_24_...: implicit type conversion (coercion)
 * rust_25_...: Path & PathBuf (filepath) + generic: (AsRef<Path>) / (Into<PathBuf>)
 
 ### Tokio
@@ -50,7 +50,9 @@
   * server_self_signed.rs / client_self_signed.rs: self signed certificate handling
   * server_ca_signed.rs / client_ca_signed.rs: certificate signed with local CA
   * main.rs / client_ca_signed_client_auth: cert signed with local CA + client auth (aka mTLS)
-
+* tokio_future_pin:
+  * Understanding Pin / Unpin + wrapping AsyncRead 
+  * from fasterthanli.me tutorial
 
 #### Tokio crates
 
@@ -73,6 +75,10 @@
 * rust_crate_clap_O1: command line argument parsing
   * cargo run -- --hostname=localhost -p=2222 --kind=http3
 
+* rust_crate_flume_01: mpmc queue (sync & async)
+  * cargo run
+  * Flume + queue peek (future): cargo run --example flume_peek
+
 * rust_crate_serde_yaml_01: serde (serialization / deserialization) to yaml
   * basic example: cargo run
   * custom deserialization: cargo run --example custom de
@@ -82,5 +88,9 @@
 * rust_crate_thiserror_anyhow_01: handling error easily using thiserror or anyhow crates
   * cargo run
 
-
-
+* rust_crate_small_strings_01: from fasterthanli.me tutorial
+  * crate: smol_str / smart_string (~ optimized String)
+  * crate: argh (cmd line argument parsing lib)
+  * custom allocator
+  * alloc report to json file
+  * TODO better doc -> cargo run -- report events.ldjson
