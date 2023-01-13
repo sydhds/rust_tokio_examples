@@ -1,6 +1,10 @@
 
 ## Howto
 
+* `cargo build --all && target/debug/rust_01_hello_world`
+
+OR: 
+
 * `cd rust_01_hello_world`
 * `cargo run`
 

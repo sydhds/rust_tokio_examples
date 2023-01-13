@@ -1,0 +1,44 @@
+[workspace]
+members = [
+    "rust_01_hello_world",
+    "rust_02_var_mut_types",
+    "rust_03_functions",
+    "rust_04_control",
+    "rust_05_pattern_matching",
+    "rust_06_ownership_borrowing",
+    "rust_07_collections",
+    "rust_08_struct",
+    "rust_09_traits",
+    "rust_10_tests",
+    "rust_11_traits_2",
+    "rust_12_closures",
+    "rust_13_threading_1",
+    "rust_14_threading_2",
+    "rust_15_iterator",
+    "rust_16_default_trait_from",
+    "rust_17_error_1",
+    "rust_18_arc_ptr",
+    "rust_19_multiple_error_types",
+    "rust_20_mutex",
+    "rust_21_enum",
+    "rust_22_into_from",
+    "rust_23_generic",
+    "rust_24_coercion",
+    "rust_25_path",
+    "rust_26_macro_1",
+    "rust_27_cow",
+    "rust_28_into_iterator",
+
+    "rust_crate_clap_01",
+    "rust_crate_flume_01",
+    "rust_crate_thiserror_anyhow_01",
+    "rust_crate_serde_yaml_01",
+    "rust_crate_small_strings_01",
+
+    "tokio_tcp_echo",
+    "tokio_async_block_return",
+    # "tokio_tcp_tls",
+]
+
+
+
