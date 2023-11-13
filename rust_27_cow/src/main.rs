@@ -67,7 +67,7 @@ fn main() {
 
     let s = String::from("FOOBAR");
     let sr = &s[..];
-    let token3 = Token::new(sr);
+    let _token3 = Token::new(sr);
 
     std::thread::spawn(move || {
         println!("token2: {:?}", token2);
@@ -81,7 +81,7 @@ fn main() {
     // Note: does not work, lifetime is non 'static
     /*
     std::thread::spawn(move || {
-        println!("token3: {:?}", token3);
+        println!("token3: {:?}", _token3);
     }).join().unwrap();
     */
 

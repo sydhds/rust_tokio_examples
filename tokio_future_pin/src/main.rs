@@ -229,6 +229,6 @@ fn main() {
     rt.block_on(app_fut2());
     rt.block_on(app_fut3());
 
-    rt.block_on(app_slow_read());
+    rt.block_on(app_slow_read()).unwrap();
 
 }

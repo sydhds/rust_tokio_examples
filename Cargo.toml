@@ -29,16 +29,23 @@ members = [
     "rust_27_cow",
     "rust_28_into_iterator",
 
-    "rust_crate_clap_01",
+    # "rust_crate_clap_01",
     "rust_crate_flume_01",
-    "rust_crate_thiserror_anyhow_01",
     "rust_crate_serde_yaml_01",
-    "rust_crate_small_strings_01",
+    # "rust_crate_small_strings_01",
+    "rust_crate_thiserror_anyhow_01",
 
     "tokio_tcp_echo",
     "tokio_async_block_return",
     # "tokio_tcp_tls",
+    "tokio_future_pin",
+
+    "tokio_crate_loom_01",
+
+    "hyper_01_http_post",
 ]
+
+resolver = "2"
 
 
 

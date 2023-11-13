@@ -37,9 +37,18 @@ fn main() {
 
     println!("And now using our even number iterator... ;-)");
 
+    for i in even_number_0() {
+        println!("i: {}", i);
+        if i > 4 {
+            break;
+        }
+    }
+
+    println!("And now using our even number iterator starting from default value...");
+
     for i in even_number(None) {
         println!("i: {}", i);
-        if i > 50 {
+        if i > 8 {
             break;
         }
     }
@@ -47,7 +56,7 @@ fn main() {
     println!("And now start to look for even number starting from 3...");
     for i in even_number(Some(3)) {
         println!("i: {}", i);
-        if i > 50 {
+        if i >= 20 {
             break;
         }
     }

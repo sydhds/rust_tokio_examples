@@ -37,6 +37,9 @@ OR:
 * rust_23_...: generic function / struct
 * rust_24_...: implicit type conversion (coercion)
 * rust_25_...: Path & PathBuf (filepath) + generic: (AsRef<Path>) / (Into<PathBuf>)
+* rust_26_...: A simple macro
+* rust_27_...: rust basics - Cow
+* rust_28_...: impl IntoInter for a Struct
 
 ### Tokio
 
@@ -76,7 +79,7 @@ OR:
 
 ## Various crates
 
-* rust_crate_clap_O1: command line argument parsing
+* [NON WORKING] rust_crate_clap_O1: command line argument parsing
   * cargo run -- --hostname=localhost -p=2222 --kind=http3
 
 * rust_crate_flume_01: mpmc queue (sync & async)
@@ -92,7 +95,7 @@ OR:
 * rust_crate_thiserror_anyhow_01: handling error easily using thiserror or anyhow crates
   * cargo run
 
-* rust_crate_small_strings_01: from fasterthanli.me tutorial
+* [NON WORKING] rust_crate_small_strings_01: from fasterthanli.me tutorial
   * crate: smol_str / smart_string (~ optimized String)
   * crate: argh (cmd line argument parsing lib)
   * custom allocator

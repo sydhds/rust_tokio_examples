@@ -164,8 +164,8 @@ fn main() {
     if let Err(e) = read_issue_ko() {
         println!("Error: {}", e);
         println!("Source: {:?}", e.source());
-        println!("Desc: {}", e.description());
-        println!("Cause: {:?}", e.cause());
+        // println!("Desc: {}", e.description()); // deprecated
+        // println!("Cause: {:?}", e.cause()); // deprecated
         //println!("Backtrace: {:?}", e.backtrace());
     }
 

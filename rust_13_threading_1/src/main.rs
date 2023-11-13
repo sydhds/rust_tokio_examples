@@ -44,7 +44,7 @@ fn main() {
     let chunked_data = data.split_whitespace();
     // println!("chunked_data: {:?}", chunked_data);
 
-    for (i, chunk) in chunked_data.enumerate() {
+    for (_i, chunk) in chunked_data.enumerate() {
         threads_2.push(
             thread::spawn(move || -> u32 {
                 // println!("Handling chunk {}: {}", i, chunk);
