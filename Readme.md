@@ -5,8 +5,8 @@
 
 OR: 
 
-* `cd rust_01_hello_world`
-* `cargo run`
+* `cargo build --bin rust_01_hello_world`
+* `cargo run --bin rust_01_hello_world`
 
 ## Examples
 
