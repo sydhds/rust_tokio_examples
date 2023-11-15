@@ -1,10 +1,9 @@
 // #[macro_use]
 // extern crate clap;
 
-use clap::{Arg, App, ArgGroup, crate_version, value_t};
+use clap::{command, Arg, ArgGroup};
 
 fn main() {
-
     // simple clap example
     /*
     let args = App::new("app")
@@ -22,42 +21,45 @@ fn main() {
     // real world clap example
 
     let kind_choices = &["http1", "http2", "http3"];
-    let args = App::new("app")
+    let args = command!()
         // .help_heading("Server") // only in clap 3 :-/
-        .version(crate_version!())
-        .arg(Arg::with_name("hostname")
-                 .short("h")
-                 .long("hostname")
-                 .help("Server hostname")
-                 // .default_value("127.0.0.1")
-             // .required(true))
+        // .version(crate_version!())
+        .arg(
+            Arg::with_name("hostname")
+                .short("h")
+                .long("hostname")
+                .help("Server hostname"), // .default_value("127.0.0.1")
+                                          // .required(true))
         )
-        .arg(Arg::with_name("port")
-                 .short("p")
-                 .long("port")
-                 .help("Server port")
-                 .default_value("8080")
-             // .required(true))
+        .arg(
+            Arg::with_name("port")
+                .short("p")
+                .long("port")
+                .help("Server port")
+                .default_value("8080"), // .required(true))
         )
-        .arg(Arg::with_name("kind")
-            .long("kind")
-            .possible_values(kind_choices)
-            .help("Server kind")
-            .default_value(kind_choices[0])
+        .arg(
+            Arg::with_name("kind")
+                .long("kind")
+                .possible_values(kind_choices)
+                .help("Server kind")
+                .default_value(kind_choices[0]),
         )
-        .arg(Arg::with_name("enable_weak_checks")
-            .long("enable_weak_checks")
-            .help("Enable wc")
+        .arg(
+            Arg::with_name("enable_weak_checks")
+                .long("enable_weak_checks")
+                .help("Enable wc"),
         )
         .arg(
             Arg::with_name("key_msg")
                 .long("key_msg")
-                .help("Message key (0 to disable)")
+                .help("Message key (0 to disable)"),
         )
         // .group(ArgGroup::with_name("server").args(&["hostname", "port"]))
         // .group(ArgGroup::with_name("keys").args(&["key_msg"]))
         .get_matches();
 
+    /*
     let hostname = args.value_of("hostname").unwrap_or("127.0.0.1");
     // let port = args.value_of("port").unwrap_or("8080");
     // let port = args.value_of("port").unwrap(); // safe to use unwrap as default value
@@ -71,5 +73,5 @@ fn main() {
     let e_wc = args.is_present("enable_weak_checks");
 
     println!("kind: {} - enable weak checks: {}", kind, e_wc);
-
+    */
 }
