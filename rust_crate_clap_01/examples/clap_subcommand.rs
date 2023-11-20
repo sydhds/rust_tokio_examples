@@ -40,9 +40,9 @@ fn main() {
             println!("{}", cli.message);
         }
         Commands::Stderr(args_) => {
-            let mut final_message = args_.prefix + &" " + &cli.message;
+            let mut final_message = args_.prefix + " " + &cli.message;
             if let Some(suffix) = args_.suffix {
-                final_message += &" ";
+                final_message += " ";
                 final_message += &suffix.to_string();
             }
             eprintln!("{}", final_message);

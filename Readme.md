@@ -82,9 +82,9 @@ OR:
 
 ## Various crates
 
-* [NON WORKING] rust_crate_clap_O1: command line argument parsing
-  * cargo run -- --hostname=localhost -p=2222 --kind=http3
-  * cargo run --example clap_subcommand -- --message flacki stderr -p "vlah" -s 1234
+* rust_crate_clap_O1: command line argument parsing
+  * cargo run -- --hostname 127.0.0.1 -k http3 "hello there!" -vvv
+  * cargo run --example clap_subcommand -- --message hero stderr -p "Ola! new" -s 1234
 
 * rust_crate_flume_01: mpmc queue (sync & async)
   * cargo run
