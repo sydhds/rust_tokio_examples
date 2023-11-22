@@ -12,5 +12,8 @@ Cargo.lock
 # IDE
 .idea
 
+# Project generated
+rust_crate_small_strings_01/*.ldjson
+
 # misc
 .cargo

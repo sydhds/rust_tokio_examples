@@ -99,9 +99,22 @@ OR:
 * rust_crate_thiserror_anyhow_01: handling error easily using thiserror or anyhow crates
   * cargo run
 
-* [NON WORKING] rust_crate_small_strings_01: from fasterthanli.me tutorial
-  * crate: smol_str / smart_string (~ optimized String)
+* rust_crate_small_strings_01: from [fasterthanli.me tutorial]()
+  * crate: [smol_str](https://docs.rs/smol_str/latest/smol_str/) / [smart_string](https://docs.rs/smartstring/latest/smartstring/)
+    * String are stack allocated if small enough, heap allocated otherwise 
   * crate: argh (cmd line argument parsing lib)
   * custom allocator
   * alloc report to json file
-  * TODO better doc -> cargo run -- report events.ldjson
+  * How to run:
+    * Read json using Serde + &str:
+    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib std 2> events.ldjson
+    * Generate report:
+    * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+    * Read json using Serde + smol_str:
+    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smol 2> events.ldjson
+    * Generate report:
+    * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+    * Read json using Serde + smart_string:
+    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
+    * Generate report:
+    * ../target/debug/rust_crate_small_strings_01 report events.ldjson 

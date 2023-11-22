@@ -1,7 +1,9 @@
+use std::fs::File;
+
 use argh::FromArgs;
 use parse_display::{Display, FromStr};
+use serde::Deserialize;
 use smartstring;
-
 
 #[derive(FromArgs)]
 #[argh(description = "Run sample code")]
@@ -28,16 +30,15 @@ impl Sample {
             Lib::Std => self.read_records::<String>(),
             Lib::Smol => self.read_records::<smol_str::SmolStr>(),
             Lib::Smart => {
-                smartstring::validate(); // make sure SafeString is safe to use
                 self.read_records::<smartstring::alias::String>();
-            },
+            }
         }
     }
 
-    fn read_records<S>(&self) where S: serde::de::DeserializeOwned {
-        // use serde::Deserialize;
-        use serde::Deserialize;
-
+    fn read_records<S>(&self)
+    where
+        S: serde::de::DeserializeOwned,
+    {
         #[derive(Deserialize)]
         struct Record<S> {
             #[allow(unused)]
@@ -46,7 +47,6 @@ impl Sample {
             state: S,
         }
 
-        use std::fs::File;
         let f = File::open("cities.json").unwrap();
         // Activate allocator 'log' only for json deserialisation
         crate::ALLOCATOR.set_active(true);

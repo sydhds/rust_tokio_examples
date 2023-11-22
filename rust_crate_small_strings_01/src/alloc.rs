@@ -4,7 +4,6 @@ use std::sync::atomic::{AtomicBool, Ordering};
 
 use serde::{Deserialize, Serialize};
 
-
 pub struct Tracing {
     pub inner: System,
     pub active: AtomicBool,
@@ -41,7 +40,7 @@ impl Tracing {
 #[derive(Clone, Copy, Serialize, Deserialize)]
 pub enum Event {
     Alloc { addr: usize, size: usize },
-    Freed { addr: usize, size: usize }
+    Freed { addr: usize, size: usize },
 }
 
 unsafe impl GlobalAlloc for Tracing {

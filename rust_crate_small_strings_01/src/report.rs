@@ -6,7 +6,6 @@ use std::{
 
 use argh::FromArgs;
 use bytesize::ByteSize;
-// use serde::de::Unexpected::Bytes;
 use textplots::{Chart, Plot, Shape};
 
 use crate::alloc;
@@ -27,8 +26,6 @@ trait Delta {
 impl Delta for alloc::Event {
     fn delta(self) -> isize {
         match self {
-            // TODO: figure out what '..' means
-            //       Looks like let a: MyStruct = ...; let b = MyStruct { foo: 32, ..a };
             Event::Alloc { size, .. } => size as isize,
             Event::Freed { size, .. } => -(size as isize),
         }
@@ -37,8 +34,7 @@ impl Delta for alloc::Event {
 
 impl Report {
     pub fn run(self) {
-
-        let f = BufReader::new(File::open(&self.path).unwrap());
+        let f = BufReader::new(File::open(self.path).unwrap());
         let mut events: Vec<alloc::Event> = Default::default();
 
         for line in f.lines() {
@@ -48,7 +44,7 @@ impl Report {
         }
         println!("Found {} events", events.len());
 
-        let mut points = vec!();
+        let mut points = vec![];
         let mut curr_bytes = 0;
         let mut peak_bytes = 0;
         let mut alloc_events = 0;
@@ -64,8 +60,14 @@ impl Report {
             }
 
             match ev {
-                Event::Alloc { size, .. } => { alloc_events += 1; alloc_bytes += size },
-                Event::Freed { size, .. } => { freed_events += 1; freed_bytes += size },
+                Event::Alloc { size, .. } => {
+                    alloc_events += 1;
+                    alloc_bytes += size
+                }
+                Event::Freed { size, .. } => {
+                    freed_events += 1;
+                    freed_bytes += size
+                }
             }
         }
 
