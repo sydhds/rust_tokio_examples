@@ -82,24 +82,31 @@ OR:
 
 ## Various crates
 
-* rust_crate_clap_O1: command line argument parsing
+* rust_crate_clap_01: command line argument parsing using [clap](https://docs.rs/clap/latest/clap/)
   * cargo run -- --hostname 127.0.0.1 -k http3 "hello there!" -vvv
   * cargo run --example clap_subcommand -- --message hero stderr -p "Ola! new" -s 1234
 
-* rust_crate_flume_01: mpmc queue (sync & async)
+* rust_crate_flume_01: [mpmc queue (sync & async)](https://docs.rs/flume/latest/flume/)
   * cargo run
-  * Flume + queue peek (future): cargo run --example flume_peek
+  * Flume + queue peek (future): 
+    * cargo run --example flume_peek
 
-* rust_crate_serde_yaml_01: serde (serialization / deserialization) to yaml
-  * basic example: cargo run
-  * custom deserialization: cargo run --example custom de
-  * validate_field (eg. non empty vec): cargo run --example validate_field
-  * DE to enum: cargo run --example ipaddr_or_domain_name
+* rust_crate_serde_yaml_01: [Serde](https://docs.rs/serde/latest/serde/) (serialization / deserialization) + [Serde yaml](https://github.com/dtolnay/serde-yaml)
+  * basic example
+    * cargo run
+  * custom deserialization
+    * cargo run --example custom de
+  * validate_field (eg. non empty vec): 
+    * cargo run --example validate_field
+  * DE to enum: 
+    * cargo run --example ipaddr_or_domain_name
 
-* rust_crate_thiserror_anyhow_01: handling error easily using thiserror or anyhow crates
+* rust_crate_thiserror_anyhow_01: handling error easily using [thiserror](https://docs.rs/thiserror/latest/thiserror/) or [anyhow](https://docs.rs/anyhow/latest/anyhow/) crates
   * cargo run
+  * RUST_BACKTRACE=1 cargo run
+    * Full backtrace is printed when println! anyhow error
 
-* rust_crate_small_strings_01: from [fasterthanli.me tutorial]()
+* rust_crate_small_strings_01: from [fasterthanli.me tutorial](https://fasterthanli.me/articles/small-strings-in-rust)
   * crate: [smol_str](https://docs.rs/smol_str/latest/smol_str/) / [smart_string](https://docs.rs/smartstring/latest/smartstring/)
     * String are stack allocated if small enough, heap allocated otherwise 
   * crate: argh (cmd line argument parsing lib)
@@ -118,3 +125,8 @@ OR:
     * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
     * Generate report:
     * ../target/debug/rust_crate_small_strings_01 report events.ldjson 
+
+* [BROKEN] rust_crate_smol: async code using to [smol](https://docs.rs/smol/latest/smol/)
+  * From articles: 
+    * https://notgull.net/why-you-want-async/
+    * https://notgull.net/futures-concurrency-in-smol/
