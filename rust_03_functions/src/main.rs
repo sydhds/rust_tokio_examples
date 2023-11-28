@@ -1,4 +1,3 @@
-
 fn main() {
     println!("Hello, world!");
 
@@ -27,5 +26,6 @@ fn add_no_rtype(x: i32, y: i32) {
 */
 
 fn add_ret(x: i32, y: i32) -> i32 {
+    #[allow(clippy::needless_return)] // disable 'cargo clippy' warning
     return x + y;
 }

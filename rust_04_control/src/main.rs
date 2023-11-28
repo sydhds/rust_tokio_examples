@@ -26,7 +26,6 @@ fn main() {
         if i > 5 {
             break;
         }
-
     }
 
     // while
@@ -48,20 +47,14 @@ fn main() {
         println!("a[x]: {}", item);
     }
 
-    println!("Now with iterate (iter by ref)");  // edition 2021
-    for item in a
-        .iter()
-        .enumerate()
-    {
+    println!("Now with iterate (iter by ref)"); // edition 2021
+    for item in a.iter().enumerate() {
         let (i, value): (usize, &i32) = item;
         println!("a[{}]: {}", i, value);
     }
 
     println!("Now with iterate (iter by value)"); // edition 2021
-    for item2 in a
-        .into_iter()
-        .enumerate()
-    {
+    for item2 in a.into_iter().enumerate() {
         let (i2, value2): (usize, i32) = item2;
         println!("a[{}]: {}", i2, value2);
     }

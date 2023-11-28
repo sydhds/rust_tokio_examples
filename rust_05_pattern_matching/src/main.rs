@@ -10,6 +10,6 @@ fn main() {
         // Note: 1..=10 is inclusive range (10 is in the range)
         x @ 1..=10 => println!("Between 1 and 10: {}", x),
         11 | 12 => println!("11 or 12"),
-        _ => println!("Nop! Not good!")
+        _ => println!("Nop! Not good!"),
     };
 }
