@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use std::collections::hash_map::Entry::{Occupied, Vacant};
+use std::collections::HashMap;
 
 fn main() {
     // println!("Hello, world!");
@@ -14,7 +14,7 @@ fn main() {
     v1[0] = 5; // allowed because vec implements the Index and IndexMut traits
     println!("v1: {:?}", v1);
 
-    let v2 = vec![10, 20, 30, 40 , 50 , 60];
+    let v2 = vec![10, 20, 30, 40, 50, 60];
     let v3 = vec![0.1; 10];
     println!("v2: {:?}", v2);
     println!("v3: {:?}", v3);
@@ -28,7 +28,10 @@ fn main() {
     let item_last_2 = v2.get(6);
     match item_last_2 {
         Some(x) => println!("v2[6]: {}", x),
-        None => { println!("v2[6]: Out of range!"); println!("yo!"); },
+        None => {
+            println!("v2[6]: Out of range!");
+            println!("yo!");
+        }
     }
 
     // Hashmap
@@ -38,7 +41,7 @@ fn main() {
     scores.insert(String::from("Red"), 20);
     println!("scores 1: {:?}", scores);
 
-    let mut scores_2: HashMap<String, u32> = HashMap::new();  // explicit type
+    let mut scores_2: HashMap<String, u32> = HashMap::new(); // explicit type
     scores_2.insert(String::from("Blue"), 10);
     scores_2.insert(String::from("Red"), 20);
     println!("scores 2: {:?}", scores_2);
@@ -53,7 +56,10 @@ fn main() {
     }
     // second match with direct value retrieval
     match e1 {
-        Occupied(x) => { let v: &i32 = x.get(); println!("Blue: {}", v); },
+        Occupied(x) => {
+            let v: &i32 = x.get();
+            println!("Blue: {}", v);
+        }
         Vacant(x) => println!("'{}' not in hash map", x.key()),
     }
 

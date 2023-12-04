@@ -1,9 +1,6 @@
 use std::cmp::max;
 
 fn main() {
-
-    // println!("Hello, world!");
-
     #[derive(Debug)]
     struct Character {
         first_name: String,
@@ -15,9 +12,8 @@ fn main() {
     }
 
     impl Character {
-
         fn get_name(&self) -> String {
-            format!("{} {}", self.first_name, self.last_name)
+            format!("[{}] {} {}", self.class, self.first_name, self.last_name)
         }
 
         // method that change Character internals (=> &mut self)
@@ -31,18 +27,16 @@ fn main() {
         }
 
         // 'class' method to be called like: Character::create_wizard(...)
-        fn create_wizard(first_name: String, last_name: String, attack: i32) -> Character {
-
-            return Character {
+        fn create_wizard(first_name: String, last_name: String, _attack: i32) -> Character {
+            Character {
                 first_name,
                 last_name,
                 class: String::from("wizard"),
                 life: 25,
                 armor: 2,
                 attack: 6,
-            };
+            }
         }
-
     }
 
     let mut conan = Character {

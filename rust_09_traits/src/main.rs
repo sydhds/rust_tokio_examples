@@ -19,9 +19,10 @@ struct Character {
     attack: i32,
 }
 
+#[allow(dead_code)]
 impl Character {
     fn get_name(&self) -> String {
-        format!("{} {}", self.first_name, self.last_name)
+        format!("[{}] {} {}", self.class, self.first_name, self.last_name)
     }
 
     // method that change Character internals (=> &mut self)
@@ -35,15 +36,15 @@ impl Character {
     }
 
     // 'class' method to be called like: Character::create_wizard(...)
-    fn create_wizard(first_name: String, last_name: String, attack: i32) -> Character {
-        return Character {
+    fn create_wizard(first_name: String, last_name: String, _attack: i32) -> Character {
+        Character {
             first_name,
             last_name,
             class: String::from("wizard"),
             life: 25,
             armor: 2,
             attack: 6,
-        };
+        }
     }
 }
 
@@ -147,7 +148,7 @@ fn main() {
     };
 
     println!("Here comes our hero: {}!!", conan.get_name());
-    println!("[God] Hero, describe yourself!");
+    println!("[Game Master] Hero, describe yourself!");
     println!("{}", conan.describe());
     println!("{}", conan.describe_with_default());
 
@@ -157,15 +158,15 @@ fn main() {
     };
 
     println!("Here comes an animal: {}!!", dog1.name);
-    println!("[God] Animal, describe yourself!");
+    println!("[Game Master] Animal, describe yourself!");
     println!("...");
-    println!("[God] Ok, let me find out your description...");
+    println!("[Game Master] Ok, let me find out your description...");
     omni_describe(&dog1);
     println!("{}", omni_describe(&dog1));
-    println!("[God] and now use it for our pseudo hero too...");
+    println!("[Game Master] and now use it for our pseudo hero too...");
     println!("{}", omni_describe_2(&conan));
     println!("{}", omni_describe_3(&conan));
-    println!("[God] and now I want to describe both of you!!");
+    println!("[Game Master] and now I want to describe both of you!!");
     println!("{}", omni_describe_4(&conan, &dog1));
 
     let cat1 = make_lazy_cat();
