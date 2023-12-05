@@ -115,17 +115,17 @@ OR:
   * alloc report to json file
   * How to run:
     * Read json using Serde + &str:
-    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib std 2> events.ldjson
+      * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib std 2> events.ldjson
     * Generate report:
-    * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+      * ../target/debug/rust_crate_small_strings_01 report events.ldjson
     * Read json using Serde + smol_str:
-    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smol 2> events.ldjson
+      * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smol 2> events.ldjson
     * Generate report:
-    * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+      * ../target/debug/rust_crate_small_strings_01 report events.ldjson
     * Read json using Serde + smart_string:
-    * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
+      * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
     * Generate report:
-    * ../target/debug/rust_crate_small_strings_01 report events.ldjson 
+      * ../target/debug/rust_crate_small_strings_01 report events.ldjson 
 
 * [BROKEN] rust_crate_smol: async code using to [smol](https://docs.rs/smol/latest/smol/)
   * From articles: 

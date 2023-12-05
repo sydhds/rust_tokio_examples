@@ -112,7 +112,9 @@ fn make_lazy_cat() -> impl Describe {
     }
 }
 
-// Note: this code will not compile
+// Note:
+// this code will not compile: types returned in if/else have incompatible types
+// Solution is to return a Box<dyn Describe>, see rust_11_traits_2 example
 /*
 fn make_animal(is_animal: bool) -> impl Describe {
     if is_animal {
@@ -127,17 +129,13 @@ fn make_animal(is_animal: bool) -> impl Describe {
             class: "".to_string(),
             life: 0,
             armor: 0,
-            attack: 0
+            attack: 0,
         }
     }
 }
 */
 
-//
-
 fn main() {
-    // println!("Hello, world!");
-
     let conan = Character {
         first_name: "Conan".to_string(),
         last_name: "The Barbarian".to_string(),
