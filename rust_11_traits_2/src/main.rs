@@ -3,8 +3,7 @@ use std::mem;
 // from:
 // http://doc.rust-lang.org/rust-by-example/trait/dyn.html
 
-struct Sheep {
-}
+struct Sheep {}
 struct Cow {
     has_milk: bool,
 }
@@ -46,7 +45,6 @@ fn random_animal(random_number: f64) -> Box<dyn Animal> {
     }
 }
 
-
 fn main() {
     // println!("Hello, world!");
     let random_number = 0.234;
@@ -56,10 +54,20 @@ fn main() {
     // Box examples
     let margo = Box::new(Cow { has_milk: true }); // heap allocated
     let margo2: Box<Cow> = Box::new(Cow { has_milk: false }); // same + type annotation
-    // let margo2_2: Box<dyn Animal> = Box::new(Cow { has_milk: true }); // type annotation with a Trait
-    let margo2_2: Box<dyn Animal> = Box::new(Cat { is_garfield: false, like_to_be_pet: true }); // type annotation with a Trait
+                                                              // let margo2_2: Box<dyn Animal> = Box::new(Cow { has_milk: true }); // type annotation with a Trait
+    let margo2_2: Box<dyn Animal> = Box::new(Cat {
+        is_garfield: false,
+        like_to_be_pet: true,
+    }); // type annotation with a Trait
     let mut margo3: Cow = Cow { has_milk: true }; // stack allocated
-    let mut margo4: Cat = Cat { is_garfield: true, like_to_be_pet: false };
+    let margo4: Cat = Cat {
+        is_garfield: true,
+        like_to_be_pet: false,
+    };
+    println!(
+        "[Stack] Cat margo_4: is garfield? {} - liek to be pet: {}",
+        margo4.is_garfield, margo4.like_to_be_pet
+    );
 
     println!("[margo] Size on stack: {}", mem::size_of_val(&margo)); // pointer size => size == 8
     println!("[margo2] Size on stack: {}", mem::size_of_val(&margo2)); // same

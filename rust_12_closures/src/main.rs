@@ -2,7 +2,7 @@ fn main() {
     // println!("Hello, world!");
 
     let _identity_closure = |x: i32| x;
-    let incr_closure = |x: i32| { x + 1 };
+    let incr_closure = |x: i32| x + 1;
     let _multi_line_closure = |x: i32| {
         println!("multi line closure...");
         x + 1

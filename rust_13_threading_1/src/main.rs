@@ -1,9 +1,7 @@
-
 use std::thread;
 use std::time::Duration;
 
 fn main() {
-
     // Note: this code comes from a tutorial but
     // code is misleading - we want to launch X threads in //
     let handle = thread::spawn(|| {
@@ -45,16 +43,14 @@ fn main() {
     // println!("chunked_data: {:?}", chunked_data);
 
     for (_i, chunk) in chunked_data.enumerate() {
-        threads_2.push(
-            thread::spawn(move || -> u32 {
-                // println!("Handling chunk {}: {}", i, chunk);
-                let result: u32 = chunk
-                    .chars()
-                    .map(|c|
-                        c.to_digit(10).expect("Should be a digit"))
-                    .sum();
-                // println!("result: {} {:?}", result, thread::current().id());
-                result
+        threads_2.push(thread::spawn(move || -> u32 {
+            // println!("Handling chunk {}: {}", i, chunk);
+            let result: u32 = chunk
+                .chars()
+                .map(|c| c.to_digit(10).expect("Should be a digit"))
+                .sum();
+            // println!("result: {} {:?}", result, thread::current().id());
+            result
         }));
     }
 
@@ -62,6 +58,6 @@ fn main() {
     let final_result: u32 = threads_2.into_iter().map(|t| t.join().unwrap()).sum();
     println!("Final result: {}", final_result);
 
-    let v = vec![1, 9, 8, 1, 6, 5, 1, 6, 7, 4, 3, 6, 6, 1, 3, 1, 3, 2, 1, 5];
+    let v = [1, 9, 8, 1, 6, 5, 1, 6, 7, 4, 3, 6, 6, 1, 3, 1, 3, 2, 1, 5];
     assert_eq!(final_result, v.iter().sum());
 }

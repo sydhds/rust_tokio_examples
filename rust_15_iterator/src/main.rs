@@ -4,7 +4,6 @@ struct EvenNumber {
 }
 
 impl Iterator for EvenNumber {
-
     type Item = u32; // can refer as Self::Item
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -23,7 +22,6 @@ fn even_number_0() -> EvenNumber {
 }
 
 fn even_number(start: Option<u32>) -> EvenNumber {
-
     // an attempt to provide (optional/default) argument to even_number
 
     match start {
@@ -34,7 +32,6 @@ fn even_number(start: Option<u32>) -> EvenNumber {
 }
 
 fn main() {
-
     println!("And now using our even number iterator... ;-)");
 
     for i in even_number_0() {
@@ -60,5 +57,4 @@ fn main() {
             break;
         }
     }
-
 }
