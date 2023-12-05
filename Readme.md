@@ -43,6 +43,7 @@ OR:
 * rust_26_...: A simple macro
 * rust_27_...: rust basics - Cow
 * rust_28_...: impl IntoInter for a Struct
+* rust_29_...: Cell & RefCell + interior mutability from [this blog](https://ricardomartins.cc/2016/06/08/interior-mutability)
 
 ### Tokio
 
