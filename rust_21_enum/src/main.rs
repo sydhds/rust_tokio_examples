@@ -12,13 +12,11 @@ fn inspect(event: WebEvent) {
         WebEvent::PageUnload => println!("Page is unloading..."),
         WebEvent::KeyPress(c) => println!("Key press: {}", c),
         WebEvent::Paste(s) => println!("Pasted \"{}\"", s),
-        WebEvent::Click {x, y} => println!("Clicked @ x={}, y={}", x, y),
+        WebEvent::Click { x, y } => println!("Clicked @ x={}, y={}", x, y),
     }
 }
 
 fn main() {
-    // println!("Hello, world!");
-
     let pressed = WebEvent::KeyPress('x');
     // to_string -> convert &str => String
     // to_owned -> owned the &str thus converting it to String

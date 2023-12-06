@@ -1,9 +1,13 @@
+#![allow(clippy::empty_loop)]
+#![allow(clippy::needless_lifetimes)]
+#![allow(clippy::extra_unused_lifetimes)]
+#![allow(clippy::manual_range_contains)]
+#![allow(dead_code)]
 
 // From
 // possiblerust.com/guide/what-can-coerce-and-where-in-rust#code-1
 
 fn ref_downgrade_coercions() {
-
     struct RefHolder<'a> {
         x: &'a i64,
     }
@@ -26,7 +30,6 @@ fn ref_downgrade_coercions() {
 }
 
 fn deref_coercion() {
-
     use std::ops::Deref;
     use std::ops::DerefMut;
 
@@ -39,37 +42,54 @@ fn deref_coercion() {
         type Target = T;
 
         fn deref(&self) -> &Self::Target {
-            return &self.t;
+            &self.t
         }
     }
 
     // DerefMut requires Deref as a supertrait
     impl<T> DerefMut for DummyWrapper<T> {
         fn deref_mut(&mut self) -> &mut Self::Target {
-            return &mut self.t;
+            &mut self.t
         }
     }
 
     let s = String::from("foo");
     let bs = Box::new(s);
     // deref coercion: calling is_empty on Box, that deref to &String
-    println!("is String in dw empty: {}, content: {:?}", bs.is_empty(), bs);
+    println!(
+        "is String in dw empty: {}, content: {:?}",
+        bs.is_empty(),
+        bs
+    );
 
     let s2 = String::from("");
     let mut dw = DummyWrapper { t: s2 };
     // deref coercion: calling is_empty on DummyWrapper, that deref to &String
-    println!("is String in dw empty: {} - content: {:?}", dw.is_empty(), dw);
+    println!(
+        "is String in dw empty: {} - content: {:?}",
+        dw.is_empty(),
+        dw
+    );
     // deref mut coercion
     dw.push('a');
-    println!("is String in dw empty: {} - content: {:?}", dw.is_empty(), dw);
+    println!(
+        "is String in dw empty: {} - content: {:?}",
+        dw.is_empty(),
+        dw
+    );
 
-    let bdw = Box::new(DummyWrapper { t: String::from("foo bar baz") });
+    let bdw = Box::new(DummyWrapper {
+        t: String::from("foo bar baz"),
+    });
     // deref coercion works even in chain: first deref for Box, then deref for DummyWrapper
-    println!("is String in bdw empty: {} - content: {:?}", bdw.is_empty(), bdw);
+    println!(
+        "is String in bdw empty: {} - content: {:?}",
+        bdw.is_empty(),
+        bdw
+    );
 }
 
 fn raw_pointers_coercion() {
-
     #[derive(Debug)]
     struct PtrHandle {
         ptr: *const i32,
@@ -82,7 +102,6 @@ fn raw_pointers_coercion() {
 }
 
 fn ref_raw_pointers_coercion() {
-
     #[derive(Debug)]
     struct ConstHandle<T> {
         ptr: *const T,
@@ -102,7 +121,6 @@ fn ref_raw_pointers_coercion() {
 }
 
 fn func_coercion() {
-
     fn takes_func_ptr(f: fn(i32) -> i32, i: i32) -> i32 {
         f(i)
     }
@@ -110,25 +128,39 @@ fn func_coercion() {
     // Another way to write takes_func_ptr using trait
     // Note here that there is no coercion
     // Closures implement at least FnOnce trait (FnMut if no move in captured env, Fn if no mut / move in captured env)
-    fn takes_func_ptr2<F>(f: F, i: i32) -> i32 where F: FnOnce(i32) -> i32 {
+    fn takes_func_ptr2<F>(f: F, i: i32) -> i32
+    where
+        F: FnOnce(i32) -> i32,
+    {
         f(i)
     }
     // As described below, our closure does not mutate / move anything so impl trait: Fn
-    fn takes_func_ptr3<F>(f: F, i: i32) -> i32 where F: Fn(i32) -> i32 {
+    fn takes_func_ptr3<F>(f: F, i: i32) -> i32
+    where
+        F: Fn(i32) -> i32,
+    {
         f(i)
     }
 
-    let my_func = |n| { n+2 };
+    let my_func = |n| n + 2;
 
-    println!("takes_func_ptr result (i=2): {}", takes_func_ptr(my_func, 0));
-    println!("takes_func_ptr result (i=17): {}", takes_func_ptr2(my_func, 17));
-    println!("takes_func_ptr result (i=17): {}", takes_func_ptr3(my_func, 21));
+    println!(
+        "takes_func_ptr result (i=2): {}",
+        takes_func_ptr(my_func, 0)
+    );
+    println!(
+        "takes_func_ptr result (i=17): {}",
+        takes_func_ptr2(my_func, 17)
+    );
+    println!(
+        "takes_func_ptr result (i=17): {}",
+        takes_func_ptr3(my_func, 21)
+    );
 }
 
 const S0: &str = "barbaz";
 
 fn subtype_coercion<'a>() {
-
     struct FnHolder {
         f: fn(&'static str) -> i32,
     }
@@ -155,15 +187,13 @@ fn subtype_coercion<'a>() {
 }
 
 fn never_coercion() {
-
     struct Value {
         x: bool,
         y: String,
     }
 
     fn never() -> ! {
-        loop{
-        }
+        loop {}
     }
 
     // let x = never(); // uncomment to enable it - will require Ctrl-C to exit the program
@@ -177,7 +207,6 @@ fn never_coercion() {
 }
 
 fn slice_coercion() {
-
     #[derive(Debug)]
     struct SliceHolder<'a> {
         slice: &'a [i32],
@@ -197,7 +226,6 @@ fn slice_coercion() {
 }
 
 fn trait_obj_coercion() {
-
     trait HasInt {
         fn get(&self) -> i32;
     }
@@ -212,13 +240,13 @@ fn trait_obj_coercion() {
 
     impl HasInt for IntHolder {
         fn get(&self) -> i32 {
-            return self.x;
+            self.x
         }
     }
 
     impl HasInt for Int8Holder {
         fn get(&self) -> i32 {
-            return self.x as i32;
+            self.x as i32
         }
     }
 
@@ -232,24 +260,21 @@ fn trait_obj_coercion() {
     print_int(&i1);
     // coercion from &Int8Holder -> &dyn HastInt
     print_int(&i2);
-
 }
 
 fn least_upper_bound_coercion() {
-
     let i = 500;
 
     let x: i8 = 10;
     let mut y: i8 = 20;
 
     let mut z_ = 25;
-    let mut _z: Box<& mut i8> = Box::new(&mut z_);
-
+    let mut _z: Box<&mut i8> = Box::new(&mut z_);
 
     let v = match i {
-        i if i < 5 => { &x }, // return here is: & i8
-        i if i >= 5 && i < 500 => { &mut y }, // return here is &mut i8 -> & i8
-        i if i >= 500 => { *_z },  // &mut i8 -> & i8
+        i if i < 5 => &x,                 // return here is: & i8
+        i if i >= 5 && i < 500 => &mut y, // return here is &mut i8 -> & i8
+        i if i >= 500 => *_z,             // &mut i8 -> & i8
         _ => {
             panic!("??");
         }
@@ -257,11 +282,9 @@ fn least_upper_bound_coercion() {
 
     let v2: &i8 = v;
     println!("v2: {:?}", v2);
-
 }
 
 fn main() {
-
     /*
      * In Rust, type conversion can be explicit:
      * From/Into traits -> infallible convert
@@ -324,7 +347,4 @@ fn main() {
     // transitive coercion
     // if A -> B and B -> C then A -> C
     // See deref coercion when we use Box<DummyWrapper<String>>
-
-
-
 }

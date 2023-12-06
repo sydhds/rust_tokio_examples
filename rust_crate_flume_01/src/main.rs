@@ -1,9 +1,6 @@
-use flume;
-
 type AFnError = Box<dyn std::error::Error + Send + Sync>;
 
 async fn app_main() {
-
     //let (tx, rx) = flume::bounded(2);
     let (tx, rx) = flume::bounded(2);
     let rx2 = rx.clone(); // can clone rx as flume queue is mpmc (multi producer multi consumer)

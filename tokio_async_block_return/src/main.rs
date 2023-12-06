@@ -1,7 +1,5 @@
 use std::error::Error;
 
-use tokio;
-
 type AError = Box<dyn Error + Send + Sync>;
 type AResult<T> = std::result::Result<T, AError>;
 
@@ -13,9 +11,8 @@ async fn my_sleep(delay: u64) -> AResult<()> {
 }
 
 async fn run() -> AResult<()> {
-
     let delay = 100;
-    let task = tokio::spawn( async move {
+    let task = tokio::spawn(async move {
         my_sleep(delay).await?;
         // Note: from rust async-book chap 07 - 02: ? in async Blocks
         //       use turbofish to provide explicit type annotation
@@ -26,12 +23,10 @@ async fn run() -> AResult<()> {
 }
 
 async fn app_main() -> AResult<()> {
-
     let coro = tokio::spawn(run()); // this work
     let (res,) = tokio::join!(coro);
     res?
 }
-
 
 fn main() {
     let rt = tokio::runtime::Runtime::new().unwrap();

@@ -11,11 +11,13 @@ impl Default for FooArgs {
 }
 
 impl From<f64> for FooArgs {
-
     fn from(a: f64) -> Self {
         // using ..Self::default() means: use the value of Self::default()
         // for remaining fields to init (here it's only for field: b)
-        Self { a, ..Self::default() }
+        Self {
+            a,
+            ..Self::default()
+        }
     }
 
     // Another way to use Default trait
@@ -41,12 +43,12 @@ impl From<(f64, i32)> for FooArgs {
 }
 
 pub fn foo<A>(args: A) -> f64
-    where A: Into<FooArgs>
+where
+    A: Into<FooArgs>,
 {
     let args_ = args.into();
     args_.a * (args_.b as f64)
 }
-
 
 fn main() {
     println!("Hello, world!");

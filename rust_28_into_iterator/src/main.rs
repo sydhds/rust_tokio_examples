@@ -1,4 +1,3 @@
-
 #[derive(Debug)]
 struct Project {
     name: String,
@@ -6,7 +5,7 @@ struct Project {
 
 #[derive(Debug)]
 struct Solution {
-    projects: Vec<Project>
+    projects: Vec<Project>,
 }
 
 impl IntoIterator for Solution {
@@ -36,10 +35,7 @@ impl<'s> IntoIterator for &'s mut Solution {
     }
 }
 
-
 fn main() {
-    println!("Hello, world!");
-
     let d1 = [99, 98, 97, 96, 95, 94, 93, 92, 91];
 
     // func1 can only take array
@@ -56,13 +52,25 @@ fn main() {
     // shared ref: for item in &collection { ... } -> impl IntoIterator<'s> for &'s Solution { ... }
     // mutable ref: for item in &mut collection { ... } -> impl IntoIterator<'s> for &'s mut Solution { ... }
 
-    let p1 = Project { name: String::from("a1") };
-    let p2 = Project { name: String::from("b22") };
-    let solution_from_m1 = Solution { projects: vec![ p1, p2 ] };
+    let p1 = Project {
+        name: String::from("a1"),
+    };
+    let p2 = Project {
+        name: String::from("b22"),
+    };
+    let solution_from_m1 = Solution {
+        projects: vec![p1, p2],
+    };
 
-    let p3 = Project { name: String::from("a2") };
-    let p4 = Project { name: String::from("b59") };
-    let mut solution_from_m2 = Solution { projects: vec![ p3, p4 ] };
+    let p3 = Project {
+        name: String::from("a2"),
+    };
+    let p4 = Project {
+        name: String::from("b59"),
+    };
+    let mut solution_from_m2 = Solution {
+        projects: vec![p3, p4],
+    };
 
     for project in solution_from_m1 {
         println!("solution for m1, project: {:?}", project);
@@ -83,7 +91,6 @@ fn main() {
     /* for project in &solution_from_m2 {
         println!("solution for m2, project: {:?}", project);
     } */
-
 }
 
 fn func1(data: &[i32]) {
@@ -92,17 +99,20 @@ fn func1(data: &[i32]) {
     }
 }
 
-fn func2_1<C>(data: C) where C: IntoIterator<Item = i32> {
-
+fn func2_1<C>(data: C)
+where
+    C: IntoIterator<Item = i32>,
+{
     for (i, v) in data.into_iter().enumerate().take(5) {
         println!("data[{}]: {:?}", i, v);
     }
 }
 
-fn func2_2<C>(data: C) where C: IntoIterator<Item = i32> {
-
+fn func2_2<C>(data: C)
+where
+    C: IntoIterator<Item = i32>,
+{
     for (i, v) in (0..5).zip(data.into_iter()) {
         println!("data[{}]: {:?}", i, v);
     }
 }
-

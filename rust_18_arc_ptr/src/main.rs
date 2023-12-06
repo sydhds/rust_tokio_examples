@@ -1,9 +1,7 @@
 use std::sync::Arc;
 use std::thread;
 
-
 fn main() {
-
     let apple = Arc::new("the very same apple".to_string());
     let mut threads = vec![];
 
@@ -16,8 +14,7 @@ fn main() {
     }
 
     for t in threads {
-        t.join();
+        t.join().unwrap();
         // println!("ref count: {}", Arc::strong_count(&apple));
     }
-
 }

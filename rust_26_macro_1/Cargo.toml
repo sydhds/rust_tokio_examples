@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 log = { version = "0.4" }
-simple_logger = { version = "2.1.0" }
-base64 = "0.13"
+simple_logger = { version = "4.3" }
+base64 = "0.21"

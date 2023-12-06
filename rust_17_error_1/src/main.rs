@@ -3,7 +3,6 @@ use std::io;
 use std::io::Read;
 
 fn read_username_from_file_0() -> Result<String, io::Error> {
-
     let mut f = match File::open("hello.txt") {
         Ok(f) => f,
         Err(e) => return Err(e),
@@ -27,10 +26,20 @@ fn read_username_from_file() -> Result<String, io::Error> {
 }
 
 fn main() {
-
-    let username = match read_username_from_file() {
+    let _ = match read_username_from_file_0() {
         Ok(x) => x,
-        Err(e) => { println!("Error: {}", e); return; },
+        Err(e) => {
+            println!("Error: {}", e);
+            return;
+        }
+    };
+
+    let _ = match read_username_from_file() {
+        Ok(x) => x,
+        Err(e) => {
+            println!("Error: {}", e);
+            return;
+        }
     };
 
     println!("username: {}", read_username_from_file().unwrap());

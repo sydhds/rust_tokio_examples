@@ -2,16 +2,13 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 
 fn main() {
-
     // 01: simple example
     let m = Mutex::new(5);
 
     {
         // Need to unwrap() after lock() because if another thread while holding the lock panic
         // the mutex cannot be used anymore
-        let mut num = m
-            .lock()
-            .unwrap();
+        let mut num = m.lock().unwrap();
         println!("is poisoned?: {}", Mutex::is_poisoned(&m));
         *num = 6;
         // as num is a MutexGuard, it will now goes out of scope and Mutex will be released
@@ -38,12 +35,15 @@ fn main() {
     */
 
     let counter = Arc::new(Mutex::new(0));
+    println!("[0] counter = {}", *counter.lock().unwrap());
     let mut handles = vec![];
 
     for _ in 0..10 {
-        let counter = Arc::clone(&counter); // increment ref counting
+        // increment ref counting
+        let counter = Arc::clone(&counter);
         // This line is ok too:
         // let counter = counter.clone();
+
         let handle = thread::spawn(move || {
             let mut c = counter.lock().unwrap();
             *c += 1;

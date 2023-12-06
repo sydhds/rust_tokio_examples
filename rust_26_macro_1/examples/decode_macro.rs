@@ -1,19 +1,15 @@
-use base64::decode;
+use base64::{engine::general_purpose, Engine as _};
 
 macro_rules! decode {
-    ($a: expr) => {
-        {
-            std::str::from_utf8(&decode($a).unwrap()).unwrap()
-        }
-    }
+    ($a: expr) => {{
+        std::str::from_utf8(&general_purpose::STANDARD.decode($a).unwrap()).unwrap()
+    }};
 }
 
 macro_rules! decode2 {
-    ($a: expr) => {
-        {
-            unsafe { std::str::from_utf8_unchecked(&decode($a).unwrap()) }
-        }
-    }
+    ($a: expr) => {{
+        unsafe { std::str::from_utf8_unchecked(&general_purpose::STANDARD.decode($a).unwrap()) }
+    }};
 }
 
 fn main() {

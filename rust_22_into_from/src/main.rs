@@ -8,7 +8,7 @@ struct Letter {
 
 struct Envelop {
     typ: String,
-    data: Letter
+    data: Letter,
 }
 
 impl Envelop {
@@ -17,6 +17,7 @@ impl Envelop {
     }
 }
 
+#[allow(clippy::from_over_into)]
 impl Into<Letter> for Envelop {
     fn into(self) -> Letter {
         self.data
@@ -24,7 +25,6 @@ impl Into<Letter> for Envelop {
 }
 
 fn main() {
-
     let letter1 = Letter {
         msg: "Hello there!".into(),
         typ: "Very important letter".into(),
@@ -35,6 +35,7 @@ fn main() {
 
     let envelop_type = String::from("Very import letter");
     let envelop = Envelop::new(envelop_type, letter1);
+    println!("envelop type: {}, {:?}", envelop.typ, envelop.data);
 
     // Cannot use into() directly in println! as we cannot do into::<Letter>()
     let letter2: Letter = envelop.into();
@@ -42,4 +43,3 @@ fn main() {
 
     assert_eq!(letter1_bak, letter2);
 }
-

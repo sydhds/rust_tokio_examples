@@ -1,15 +1,15 @@
-use log::{info, warn, debug, error};
+#![allow(unused_macros)]
+
+use log::{debug, error, info, warn};
 
 macro_rules! panic_or_warn {
-    ($a: expr) => {
-        {
-            if cfg!(debug_assertions) {
-                panic!($a)
-            } else {
-                warn!($a)
-            }
+    ($a: expr) => {{
+        if cfg!(debug_assertions) {
+            panic!($a)
+        } else {
+            warn!($a)
         }
-    }
+    }};
 }
 
 macro_rules! panic_or {
@@ -30,8 +30,6 @@ macro_rules! panic_or {
 }
 
 fn main() {
-    // println!("Hello, world!");
-
     simple_logger::SimpleLogger::new()
         .with_utc_timestamps()
         .init()
