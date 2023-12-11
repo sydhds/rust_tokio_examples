@@ -42,8 +42,9 @@ OR:
 * rust_25_...: Path & PathBuf (filepath) + generic: (AsRef<Path>) / (Into<PathBuf>)
 * rust_26_...: A simple macro
 * rust_27_...: rust basics - Cow
-* rust_28_...: impl IntoInter for a Struct
+* rust_28_...: impl IntoInter for a struct
 * rust_29_...: Cell & RefCell + interior mutability from [this blog](https://ricardomartins.cc/2016/06/08/interior-mutability)
+* rust_30_...: impl [Deref]() & [DerefMut]() trait for a struct 
 
 ### Tokio
 
@@ -56,11 +57,12 @@ OR:
   * type annotation in async closure
   * generic error type in order to use ? in async func
 * tokio_tcp_tls: an uppercase tcp/tls server / client
-  * TODO better doc 
   * gen certificate with certs/*.sh scripts (require openssl)
   * server_self_signed.rs / client_self_signed.rs: self signed certificate handling
   * server_ca_signed.rs / client_ca_signed.rs: certificate signed with local CA
   * main.rs / client_ca_signed_client_auth: cert signed with local CA + client auth (aka mTLS)
+  * Check [Readme in tokio_tcp_tls](tokio_tcp_tls/Readme.md)
+
 * tokio_future_pin:
   * Understanding Pin / Unpin + wrapping AsyncRead 
   * from fasterthanli.me tutorial

@@ -29,6 +29,7 @@ members = [
     "rust_27_cow",
     "rust_28_into_iterator",
     "rust_29_interior_mut",
+    "rust_30_deref",
 
     "rust_crate_clap_01",
     "rust_crate_flume_01",
