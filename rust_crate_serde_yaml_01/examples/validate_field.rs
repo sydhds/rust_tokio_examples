@@ -3,37 +3,41 @@ use serde::{Deserialize, Deserializer};
 // A way to define some 'validator functions' for a particular field
 
 fn de_above_2<'de, D>(deserializer: D) -> Result<u32, D::Error>
-    where D: Deserializer<'de>
+where
+    D: Deserializer<'de>,
 {
     let v = u32::deserialize(deserializer)?;
     if v > 2 {
         Ok(v)
     } else {
         Err(serde::de::Error::invalid_value(
-            serde::de::Unexpected::Unsigned(v as u64), &"a value above 2")
-        )
+            serde::de::Unexpected::Unsigned(v as u64),
+            &"a value above 2",
+        ))
     }
 }
 
 fn de_non_empty_vec<'de, D>(deserializer: D) -> Result<Vec<u32>, D::Error>
-    where D: Deserializer<'de>
+where
+    D: Deserializer<'de>,
 {
     let v = Vec::deserialize(deserializer)?;
     if !v.is_empty() {
         Ok(v)
     } else {
         Err(serde::de::Error::invalid_value(
-            serde::de::Unexpected::Seq, &"a non empty vector'")
-        )
+            serde::de::Unexpected::Seq,
+            &"a non empty vector'",
+        ))
     }
 }
 
 #[derive(Debug, Deserialize)]
 struct Struct {
-    #[serde(deserialize_with="de_above_2")]
+    #[serde(deserialize_with = "de_above_2")]
     field_above_2: u32,
-    #[serde(deserialize_with="de_non_empty_vec")]
-    vec_non_empty: Vec<u32>
+    #[serde(deserialize_with = "de_non_empty_vec")]
+    vec_non_empty: Vec<u32>,
 }
 
 fn main() {
@@ -53,5 +57,4 @@ fn main() {
     // This will return an error -> empty vec is rejected
     let s3: Result<Struct, serde_yaml::Error> = serde_yaml::from_str(&s_yml2);
     println!("s3: {:?}", s3);
-
 }

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, PartialEq, Serialize, Deserialize)]
 struct Point {
@@ -12,11 +12,10 @@ struct Point {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Test1 {
-    points: HashMap<String, Point>
+    points: HashMap<String, Point>,
 }
 
 fn main() -> Result<(), serde_yaml::Error> {
-
     // example 1
 
     let point = Point { x: 1.0, y: 2.0 };
@@ -35,13 +34,8 @@ fn main() -> Result<(), serde_yaml::Error> {
 
     let pt_bob = Point { x: 1.0, y: 2.0 };
     let pt_alice = Point { x: 1.5, y: 99.27 };
-    let h1 = HashMap::from([
-        ("Bob", pt_bob),
-        ("Alice", pt_alice),
-    ]);
-    let h0 = HashMap::from([
-        ("points", h1)
-    ]);
+    let h1 = HashMap::from([("Bob", pt_bob), ("Alice", pt_alice)]);
+    let h0 = HashMap::from([("points", h1)]);
 
     let s: String = serde_yaml::to_string(&h0)?;
     println!("s: {}", s);
@@ -50,10 +44,8 @@ fn main() -> Result<(), serde_yaml::Error> {
 
     let pt_bob = Point { x: 1.0, y: 2.0 };
     let pt_alice = Point { x: 1.5, y: 99.27 };
-    let h1: HashMap<String, Point> = HashMap::from([
-        ("Bob".to_string(), pt_bob),
-        ("Alice".to_string(), pt_alice),
-    ]);
+    let h1: HashMap<String, Point> =
+        HashMap::from([("Bob".to_string(), pt_bob), ("Alice".to_string(), pt_alice)]);
     let h0 = Test1 { points: h1 };
 
     let s: String = serde_yaml::to_string(&h0)?;
@@ -61,7 +53,7 @@ fn main() -> Result<(), serde_yaml::Error> {
 
     //
 
-    let f = std::fs::File::open("test1.yml").unwrap();  // too lazy to handle this error ;)
+    let f = std::fs::File::open("test1.yml").unwrap(); // too lazy to handle this error ;)
     let d: Test1 = serde_yaml::from_reader(f)?;
 
     println!("Read yaml string: {:?}", d);

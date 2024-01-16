@@ -1,8 +1,9 @@
-use serde::{Deserialize, Deserializer};
 use serde::de::Error;
+use serde::{Deserialize, Deserializer};
 
 // How to Deserialize a struct where an enum is driven by the field name
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct Example {
     field: i32,
@@ -30,7 +31,8 @@ enum AnEnum {
 
 impl<'de> Deserialize<'de> for Example {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-        where D: Deserializer<'de>
+    where
+        D: Deserializer<'de>,
     {
         #[derive(Debug, Deserialize)]
         struct Mapping {
@@ -45,22 +47,20 @@ impl<'de> Deserialize<'de> for Example {
 
         match (a, b) {
             (Some(_), Some(_)) => Err(D::Error::custom("multiple variant specified")),
-            (Some(a), None) => {
-                Ok(Example { field, an_enum: AnEnum::A(a) })
-            }
-            (None, Some(b)) => {
-                Ok(Example { field, an_enum: AnEnum::B(b) })
-            }
-            (None, None) => {
-                Err(D::Error::custom("No variants specified"))
-            }
+            (Some(a), None) => Ok(Example {
+                field,
+                an_enum: AnEnum::A(a),
+            }),
+            (None, Some(b)) => Ok(Example {
+                field,
+                an_enum: AnEnum::B(b),
+            }),
+            (None, None) => Err(D::Error::custom("No variants specified")),
         }
     }
 }
 
-
 fn main() {
-
     let a = r#"{ "field": 42, "A": 42 }"#;
     let b = r#"{ "field": 42, "B": 110 }"#;
 
@@ -74,10 +74,17 @@ fn main() {
 
     let ya = "field: 42\nA: 42";
     let yb = "field: 42\nB: 110";
+    // should return an error here
+    let yc = "field: 42\nC: 900";
+    let y0 = "field: 42\n";
 
     let ya: Result<Example, _> = serde_yaml::from_str(ya);
     let yb: Result<Example, _> = serde_yaml::from_str(yb);
+    let yc: Result<Example, _> = serde_yaml::from_str(yc);
+    let y0: Result<Example, _> = serde_yaml::from_str(y0);
 
     println!("ya: {:?}", ya);
     println!("yb: {:?}", yb);
+    println!("yc: {:?}", yc);
+    println!("y0: {:?}", y0);
 }
