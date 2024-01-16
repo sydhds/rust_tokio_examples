@@ -1,6 +1,6 @@
 use flume;
-use futures::stream::{self, StreamExt};
 use futures::pin_mut;
+use futures::stream::{self, StreamExt};
 use rand::Rng;
 
 // cargo run --example flume_peek
@@ -15,7 +15,6 @@ struct Message {
 const MESSAGE_COUNT: u32 = 9;
 
 async fn feed_queue(tx: flume::Sender<Message>) {
-
     //todo!()
 
     let mut m = Message {
@@ -33,11 +32,9 @@ async fn feed_queue(tx: flume::Sender<Message>) {
         //tokio::time::sleep(tokio::time::Duration::from_millis(150)).await;
         m.bar += 1;
     }
-
 }
 
 async fn sink_queue(rx: flume::Receiver<Message>) {
-
     let rx_ = rx.clone();
     let rxs = rx.into_stream().peekable();
     // println!("rxs: {:?}", rxs);
@@ -48,12 +45,12 @@ async fn sink_queue(rx: flume::Receiver<Message>) {
 
     pin_mut!(rxs);
     loop {
-
         let msg_: Option<&Message> = rxs.as_mut().peek().await; // get reference
         println!("peek! {:?}", rx_.len());
         if msg_.is_none() {
             // stream has ended, break the loop...
-            break; }
+            break;
+        }
         println!("msg_ bar: {:?}", msg_.unwrap().bar);
 
         // Do something, here we just generate random bool
@@ -77,7 +74,6 @@ async fn sink_queue(rx: flume::Receiver<Message>) {
 }
 
 async fn app_main() {
-
     let (tx, rx) = flume::bounded::<Message>(2);
 
     println!("tx: {:?}", tx);
@@ -93,7 +89,6 @@ async fn app_main() {
 }
 
 fn main() {
-
     println!("Hello there!");
 
     let rt = tokio::runtime::Runtime::new().unwrap();
