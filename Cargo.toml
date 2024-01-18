@@ -38,6 +38,8 @@ members = [
     "rust_crate_thiserror_anyhow_01",
     # "rust_crate_smol",
 
+    "rustgdb_1",
+
     "tokio_tcp_echo",
     "tokio_async_block_return",
     "tokio_future_pin",
@@ -46,6 +48,7 @@ members = [
     "tokio_crate_loom_01",
 
     "hyper_01_http_post",
+
 ]
 
 resolver = "2"

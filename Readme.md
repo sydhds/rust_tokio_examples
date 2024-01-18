@@ -87,11 +87,13 @@ OR:
 
 * rust_crate_clap_01: command line argument parsing using [clap](https://docs.rs/clap/latest/clap/)
   * cargo run -- --hostname 127.0.0.1 -k http3 "hello there!" -vvv
-  * cargo run --example clap_subcommand -- --message hero stderr -p "Ola! new" -s 1234
+  * examples:
+    * sub command (using [Derive](https://docs.rs/clap/latest/clap/_derive/index.html))
+      * cargo run --example clap_subcommand -- --message hero stderr -p "Ola! new" -s 1234
 
 * rust_crate_flume_01: [mpmc queue (sync & async)](https://docs.rs/flume/latest/flume/)
   * cargo run
-  * Flume + queue peek (future): 
+  * Flume + queue peek (future):
     * cargo run --example flume_peek
 
 * rust_crate_serde_yaml_01: [Serde](https://docs.rs/serde/latest/serde/) (serialization / deserialization) + [Serde yaml](https://github.com/dtolnay/serde-yaml)
@@ -128,6 +130,11 @@ OR:
       * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
     * Generate report:
       * ../target/debug/rust_crate_small_strings_01 report events.ldjson 
+
+## Misc
+
+* rustgdb_1: Debug rust program using rust-gdb
+  * Check [Readme](rustgdb_1/Readme.md)
 
 * [BROKEN] rust_crate_smol: async code using to [smol](https://docs.rs/smol/latest/smol/)
   * From articles: 
