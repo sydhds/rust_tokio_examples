@@ -99,7 +99,7 @@ fn main() {
         };
         println!("cat2_2: {:?}", cat2_2);
 
-        let cat2_2_ref = cat2_1.as_any().downcast_ref::<Cat2>().unwrap();
+        let cat2_2_ref: &Cat2 = cat2_1.as_any().downcast_ref::<Cat2>().unwrap();
         println!("cat2_2_ref: {:?}", cat2_2_ref);
         cat2_2 = cat2_1
             .as_any() // &dyn Any
