@@ -34,7 +34,7 @@ OR:
 * rust_17_...: rust basics - error handling + keyword: ?
 * rust_18_...: sharing a value between threads with Atomic Reference Counting (Arc)
 * rust_19_...: function that can return multi error types (complex - 4 != implementations)
-* rust_20_...: thread + Mutex (+ Arc)
+* rust_20_...: thread + Mutex (+ Arc + [parking_lot](https://docs.rs/parking_lot/latest/parking_lot/) example)
 * rust_21_...: rust basics - enum (enum with data)
 * rust_22_...: impl Into for a struct
 * rust_23_...: generic function / struct
