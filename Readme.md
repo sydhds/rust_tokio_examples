@@ -111,6 +111,10 @@ OR:
   * RUST_BACKTRACE=1 cargo run
     * Full backtrace is printed when println! anyhow error
 
+* rust_crate_nom_01: how to parse a jpeg file (binary file) using [nom](https://docs.rs/nom/latest/nom/)
+  * wget https://upload.wikimedia.org/wikipedia/commons/3/3f/JPEG_example_flower.jpg
+  * cargo run -- JPEG_example_flower.jpg
+
 * rust_crate_small_strings_01: from [fasterthanli.me tutorial](https://fasterthanli.me/articles/small-strings-in-rust)
   * crate: [smol_str](https://docs.rs/smol_str/latest/smol_str/) / [smart_string](https://docs.rs/smartstring/latest/smartstring/)
     * String are stack allocated if small enough, heap allocated otherwise 
