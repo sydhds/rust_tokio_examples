@@ -47,6 +47,7 @@ members = [
     # "tokio_tcp_tls",
 
     "tokio_crate_loom_01",
+    "tokio_async_common_mistakes",
 
     "hyper_01_http_post",
 

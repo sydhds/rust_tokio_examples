@@ -56,6 +56,9 @@ OR:
 * tokio_async_block_return:
   * type annotation in async closure
   * generic error type in order to use ? in async func
+* tokio_async_common_mistakes:
+  * rust async common mistakes from this [blog](https://www.qovery.com/blog/common-mistakes-with-rust-async/)
+  * Use nc 127.0.0.1 8081 to interact with 2nd example
 * tokio_tcp_tls: an uppercase tcp/tls server / client
   * gen certificate with certs/*.sh scripts (require openssl)
   * server_self_signed.rs / client_self_signed.rs: self signed certificate handling
