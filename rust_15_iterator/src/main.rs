@@ -18,17 +18,16 @@ impl Iterator for EvenNumber {
 }
 
 fn even_number_0() -> EvenNumber {
+    // create a EvenNumber struct (which implement Iterator trait)
     EvenNumber { curr: 0 }
 }
 
 fn even_number(start: Option<u32>) -> EvenNumber {
     // an attempt to provide (optional/default) argument to even_number
-
     match start {
         Some(x) => EvenNumber { curr: x },
         None => EvenNumber { curr: 0 },
     }
-    // EvenNumber { curr: start }
 }
 
 fn main() {

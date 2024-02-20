@@ -118,6 +118,12 @@ OR:
   * wget https://upload.wikimedia.org/wikipedia/commons/3/3f/JPEG_example_flower.jpg
   * cargo run -- JPEG_example_flower.jpg
 
+* rust_crate_rayon_01:
+  * generate a ppm image and use rayon to process image data in //
+    * cargo run 
+      * xdg-open image.ppm
+      * xdg-open image_gray.ppm
+
 * rust_crate_small_strings_01: from [fasterthanli.me tutorial](https://fasterthanli.me/articles/small-strings-in-rust)
   * crate: [smol_str](https://docs.rs/smol_str/latest/smol_str/) / [smart_string](https://docs.rs/smartstring/latest/smartstring/)
     * String are stack allocated if small enough, heap allocated otherwise 

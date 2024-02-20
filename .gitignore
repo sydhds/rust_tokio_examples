@@ -14,6 +14,7 @@ Cargo.lock
 
 # Project generated
 rust_crate_small_strings_01/*.ldjson
+rust_crate_rayon_01/*.ppm
 
 # misc
 .cargo

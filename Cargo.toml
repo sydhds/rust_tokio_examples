@@ -37,6 +37,7 @@ members = [
     "rust_crate_small_strings_01",
     "rust_crate_thiserror_anyhow_01",
     "rust_crate_nom_01",
+    "rust_crate_rayon_01",
     # "rust_crate_smol",
 
     "rustgdb_1",
