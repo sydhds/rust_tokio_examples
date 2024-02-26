@@ -495,6 +495,7 @@ async fn my_progress_task(mut work: tokio::sync::mpsc::UnboundedReceiver<u64>) {
                 // process_work(msg); // making it async don't change the issue
                 // Note: this sleep will prevent heartbeat to send a heartbeat if the sleeping time
                 //       is too high (this simulates a process work that is higher than the tick interval)
+                // Note 2: if you check the logs, you will notice some delay in heartbeat messages
                 tokio::time::sleep(tokio::time::Duration::from_millis(msg.unwrap())).await;
                 let _ = stdout.write_all(
                     format!("End of process work ({:?})\n", msg).as_bytes()
