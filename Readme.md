@@ -122,7 +122,7 @@ OR:
     * cargo run -- JPEG_example_flower.jpg
 
 * rust_crate_rayon_01:
-    * generate a ppm image and use rayon to process image data in //
+    * generate a ppm image and use rayon to process image data in // using [rayon](https://docs.rs/rayon/latest/rayon/)
         * cargo run
             * xdg-open image.ppm
             * xdg-open image_gray_std.ppm
@@ -131,23 +131,23 @@ OR:
 * rust_crate_small_strings_01: from [fasterthanli.me tutorial](https://fasterthanli.me/articles/small-strings-in-rust)
     *
   crate: [smol_str](https://docs.rs/smol_str/latest/smol_str/) / [smart_string](https://docs.rs/smartstring/latest/smartstring/)
-  * String are stack allocated if small enough, heap allocated otherwise
-    * crate: argh (cmd line argument parsing lib)
-    * custom memory allocator
-    * alloc report to json file
-    * How to run:
-        * Read json using Serde + &str:
-            * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib std 2> events.ldjson
-        * Generate report:
-            * ../target/debug/rust_crate_small_strings_01 report events.ldjson
-        * Read json using Serde + smol_str:
-            * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smol 2> events.ldjson
-        * Generate report:
-            * ../target/debug/rust_crate_small_strings_01 report events.ldjson
-        * Read json using Serde + smart_string:
-            * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
-        * Generate report:
-            * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+    * String are stack allocated if small enough, heap allocated otherwise
+        * crate: argh (cmd line argument parsing lib)
+        * custom memory allocator
+        * alloc report to json file
+        * How to run:
+            * Read json using Serde + &str:
+                * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib std 2> events.ldjson
+            * Generate report:
+                * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+            * Read json using Serde + smol_str:
+                * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smol 2> events.ldjson
+            * Generate report:
+                * ../target/debug/rust_crate_small_strings_01 report events.ldjson
+            * Read json using Serde + smart_string:
+                * rm -f events.ldjson && ../target/debug/rust_crate_small_strings_01 sample --lib smart 2> events.ldjson
+            * Generate report:
+                * ../target/debug/rust_crate_small_strings_01 report events.ldjson
 
 ## Misc
 
