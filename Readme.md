@@ -25,7 +25,7 @@ OR:
 * rust_08_...: rust basics - struct / struct functions (e.g. ~ class methods)
 * rust_09_...: rust basics - traits
 * rust_10_...: rust basics - unit tests
-* rust_11_...: rust basics - traits 2 aka Box aka function return different Struct (impl trait Describe)
+* rust_11_...: rust basics - traits 2 aka Box aka function return struct (impl trait Describe) + RangeBounds example
 * rust_12_...: rust basics - closures aka lambda
 * rust_13_...: rust basics - spawn thread(s) + map reduce example
 * rust_14_...: rust basics - channel to communicate between threads (mpsc: multi producer, single consumer)

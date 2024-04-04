@@ -38,7 +38,7 @@ impl Animal for Cat {
 
 // Note:
 // Here we return an object implementing the trait: Animal
-// The compiler cannot known the size of the return object in advance so it needs to be allocated
+// The compiler cannot know the size of the return object in advance, so it needs to be allocated
 // Box -> value alloc on the heap (default is the Stack)
 // Box is a smart pointer
 fn random_animal(random_number: f64) -> Box<dyn Animal> {
