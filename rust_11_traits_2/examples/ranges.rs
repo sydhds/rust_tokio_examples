@@ -49,6 +49,16 @@ fn main() {
     //     "Calling take_range_4 on another range: {}",
     //     take_range_4(0..7u64, 4u32)
     // );
+
+    // With take_range_5 and because u32 can be converted to u64 it works :)
+    println!(
+        "Calling take_range_5 on another range: {}",
+        take_range_5(0..7u64, 4u32)
+    );
+    println!(
+        "Calling take_range_6 on another range: {}",
+        take_range_6(0..7u64, 4u32)
+    );
 }
 
 fn take_range_1(r: Range<u32>) {
@@ -75,11 +85,30 @@ where
     }
 }
 
-// A generic function over range with trait RangeBounds
+// A generic function over range with only trait RangeBounds
 fn take_range_4<R, I>(r: R, i: I) -> bool
 where
     R: RangeBounds<I>,
     I: num::Integer,
 {
     r.contains(&i)
+}
+
+// Another version of take_range_4
+fn take_range_5<R, I, IT>(r: R, i: IT) -> bool
+where
+    R: RangeBounds<I>,
+    I: num::Integer,
+    IT: Into<I>,
+{
+    r.contains(&i.into())
+}
+
+// Another version of take_range_5
+fn take_range_6<R, I, IT>(r: R, i: IT) -> bool
+where
+    R: RangeBounds<I>,
+    I: num::Integer + From<IT>,
+{
+    r.contains(&I::from(i))
 }
