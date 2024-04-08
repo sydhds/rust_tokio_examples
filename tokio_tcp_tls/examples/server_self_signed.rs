@@ -58,8 +58,6 @@ async fn handle_conn(
     writer: &mut WriteHalf<tokio_rustls::server::TlsStream<TcpStream>>,
     buffer_len: usize,
 ) {
-    // same as handle_conn but with dynamic buffer_len + handle partial write
-
     let mut buffer: Vec<u8> = vec![0; buffer_len];
 
     loop {
@@ -116,10 +114,11 @@ async fn serve() -> AResult<()> {
     let arg: Vec<String> = env::args().skip(1).take(3).collect();
 
     // let empty_str = String::new();
+    let panic_msg = "Use: cargo run -- 127.0.0.1:7070 cert.pem key.pem";
     let (addr, cert, key, _enable_tls) = match arg.len() {
-        0..=2 => panic!("Use: cargo run -- 127.0.0.1:7070 cert.pem key.pem"),
+        0..=2 => panic!("{}", panic_msg),
         3 => (&arg[0], &arg[1], &arg[2], true),
-        _ => panic!(),
+        _ => panic!("{}", panic_msg),
     };
 
     println!("arg 1: {}", cert);

@@ -30,7 +30,7 @@ members = [
     "rust_28_into_iterator",
     "rust_29_interior_mut",
     "rust_30_deref",
-
+    # rust crate examples
     "rust_crate_clap_01",
     "rust_crate_flume_01",
     "rust_crate_serde_yaml_01",
@@ -38,20 +38,19 @@ members = [
     "rust_crate_thiserror_anyhow_01",
     "rust_crate_nom_01",
     "rust_crate_rayon_01",
-    # "rust_crate_smol",
-
+    # rust misc examples
     "rustgdb_1",
-
+    # tokio examples
     "tokio_tcp_echo",
     "tokio_async_block_return",
     "tokio_future_pin",
-    # "tokio_tcp_tls",
-
-    "tokio_crate_loom_01",
     "tokio_async_common_mistakes",
-
-    "hyper_01_http_post",
-
+    # tokio crate examples
+    "tokio_crate_loom_01",
+    "tokio_crate_codec_01",
+    "tokio_tcp_tls",
+    # hyper examples
+    # "hyper_01_http_post",
 ]
 
 resolver = "2"
