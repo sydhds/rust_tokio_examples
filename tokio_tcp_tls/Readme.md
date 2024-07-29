@@ -54,7 +54,7 @@ openssl s_client -showcerts -connect 127.0.0.1:6161
 cargo run --example client_ca_signed -- 127.0.0.1:6161 certs/ca_signed/root_ca.pem mydomain.com
 `
 
-# Certificated signed with local CA + client auth ([mTLS]())
+# Certificated signed with local CA + client auth ([mTLS](https://en.wikipedia.org/wiki/Mutual_authentication#mTLS))
 
 ## Setup
 
