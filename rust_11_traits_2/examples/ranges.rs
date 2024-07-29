@@ -1,16 +1,20 @@
+// #![feature(step_trait)]
+
 use std::fmt::{Debug, Display};
-use std::ops::{Range, RangeBounds, RangeFrom};
+use std::ops::{Range, RangeBounds, RangeFrom, RangeInclusive};
 
 fn main() {
     let r1: Range<u32> = 0..2;
-    let r2 = 0u32..;
-    let r3 = ..5u32;
+    let r1_2: RangeInclusive<u32> = 0..=4;
+    let r2 = 0u32..; // type: RangeFrom<u32>
+    let r3 = ..5u32; // type: RangeTo<u32>
 
     println!("Calling take_range_1 on r1");
     // Pass a standard range (https://doc.rust-lang.org/std/ops/struct.Range.html)
     take_range_1(r1.clone());
-    // This will not compile as r2 is RangeFrom
+    // This will not compile as r1_2 is RangeInclusive && r2 is RangeFrom
     // https://doc.rust-lang.org/std/ops/struct.RangeFrom.html
+    // take_range_1(r1_2.clone());
     // take_range_1(r2);
 
     println!("Calling take_range_2 on r2");
@@ -19,6 +23,8 @@ fn main() {
     // Can use take_range_3 as a generic function
     println!("Calling take_range_3 on r1");
     take_range_3(r1.clone());
+    println!("Calling take_range_3 on r1_2");
+    take_range_3(r1_2.clone());
     println!("Calling take_range_3 on r2");
     take_range_3(r2.clone());
 
@@ -59,6 +65,31 @@ fn main() {
         "Calling take_range_6 on another range: {}",
         take_range_6(0..7u64, 4u32)
     );
+
+    // Function returning ranges
+    let rm_1 = make_range_2(5, 7, true);
+    let rm_1_2 = make_range_2(5, 7, false);
+    println!("Iterating over rm_1 (from make_range_2 inclusive):");
+    rm_1.for_each(|i| println!("i: {}", i));
+    println!("Iterating over rm_1_2 (from make_range_2 non inclusive):");
+    rm_1_2.for_each(|i| println!("i: {}", i));
+
+    // Only on Rust nightly
+    /*
+    let rm_1_3 = make_range_3(5, 7, false);
+    println!("Iterating over rm_1_3 (from make_range_3 non inclusive):");
+    rm_1_3.for_each(|i| println!("i: {}", i));
+    */
+
+    // Cannot clone Box<Iterator<...>>
+    // let rm_1_2_clone = rm_1_2.clone();
+
+    let rm_c_1 = make_range_clone_2(5, 7, true);
+    let rm_c_1_2 = make_range_clone_2(5, 7, false);
+    println!("Iterating over clone() rm_c_1 (from make_range_clone_2 inclusive):");
+    rm_c_1.clone_box().for_each(|i| println!("i: {}", i));
+    println!("Iterating over cloned rm_c_1_2 (from make_range_clone_2 non inclusive):");
+    rm_c_1_2.clone_box().for_each(|i| println!("i: {}", i));
 }
 
 fn take_range_1(r: Range<u32>) {
@@ -111,4 +142,71 @@ where
     I: num::Integer + From<IT>,
 {
     r.contains(&I::from(i))
+}
+
+// This will not compile: `RangeBounds` cannot be made into an object
+// According to: https://doc.rust-lang.org/reference/items/traits.html#object-safety
+// Generics are not compatible with vtables.
+// And RangeBounds has method: fn contains<U>(&self, item: &U) -> bool
+/*
+fn make_range<T>(start: T, end: T, is_inclusive: bool) -> Box<dyn RangeBounds<T>> {
+    if is_inclusive {
+        Box::new(start..=end)
+    } else {
+        Box::new(start..end)
+    }
+}
+*/
+
+fn make_range_2(start: i32, end: i32, is_inclusive: bool) -> Box<dyn Iterator<Item = i32>> {
+    if is_inclusive {
+        Box::new(start..=end)
+    } else {
+        Box::new(start..end)
+    }
+}
+
+// Require unstable feature
+// https://doc.rust-lang.org/std/iter/trait.Step.html
+/*
+fn make_range_3<T: num::Integer + std::iter::Step + 'static>(
+    start: T,
+    end: T,
+    is_inclusive: bool,
+) -> Box<(dyn Iterator<Item = T> + 'static)> {
+    if is_inclusive {
+        Box::new(start..=end)
+    } else {
+        Box::new(start..end)
+    }
+}
+*/
+
+// Note:
+// Clone (https://doc.rust-lang.org/std/clone/trait.Clone.html) has supertrait Sized
+// but Box<dyn Trait> is not Sized
+trait CloneIterator: Iterator {
+    fn clone_box(&self) -> Box<dyn CloneIterator<Item = Self::Item>>;
+}
+
+// Implement our special trait for all Cloneable Iterators
+impl<T> CloneIterator for T
+where
+    T: 'static + Iterator + Clone,
+{
+    fn clone_box(&self) -> Box<dyn CloneIterator<Item = Self::Item>> {
+        Box::new(self.clone())
+    }
+}
+
+fn make_range_clone_2(
+    start: i32,
+    end: i32,
+    is_inclusive: bool,
+) -> Box<dyn CloneIterator<Item = i32>> {
+    if is_inclusive {
+        Box::new(start..=end)
+    } else {
+        Box::new(start..end)
+    }
 }
