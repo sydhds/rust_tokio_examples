@@ -207,6 +207,7 @@ struct Frame {
     components: u8,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum JpegSegment {
     StartOfImage,

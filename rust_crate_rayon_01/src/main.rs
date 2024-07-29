@@ -20,7 +20,7 @@ fn main() {
 
     println!("Writing {:?}...", path_1);
     write_image(width, height, &img, &path_1)
-        .expect(format!("Unable to write image {:?}", path_1).as_str());
+        .unwrap_or_else(|_| panic!("Unable to write image {:?}", path_1));
     let mut img2 = img.clone();
     let to_grayscale = |chunk: &mut [u8]| {
         let r = chunk[0];
@@ -55,11 +55,11 @@ fn main() {
 
     println!("Writing {:?}...", path_2_1);
     write_image(width, height, &img, &path_2_1)
-        .expect(format!("Unable to write image {:?}", path_2_1).as_str());
+        .unwrap_or_else(|_| panic!("Unable to write image {:?}", path_2_1));
 
     println!("Writing {:?}...", path_2_2);
     write_image(width, height, &img2, &path_2_2)
-        .expect(format!("Unable to write image {:?}", path_2_2).as_str());
+        .unwrap_or_else(|_| panic!("Unable to write image {:?}", path_2_2));
 }
 
 fn generate_image_data(width: u16, height: u16) -> anyhow::Result<Vec<u8>> {
@@ -87,7 +87,7 @@ fn generate_image_data(width: u16, height: u16) -> anyhow::Result<Vec<u8>> {
     Ok(data)
 }
 
-fn write_image(width: u16, height: u16, data: &Vec<u8>, path: &PathBuf) -> anyhow::Result<()> {
+fn write_image(width: u16, height: u16, data: &[u8], path: &PathBuf) -> anyhow::Result<()> {
     let file = std::fs::File::create(path)?;
     let mut writer = LineWriter::new(file);
 
@@ -95,7 +95,7 @@ fn write_image(width: u16, height: u16, data: &Vec<u8>, path: &PathBuf) -> anyho
     let line_size = u32::from(width) * color_count;
 
     writer.write_all(b"P3\n")?;
-    write!(writer, "{} {}\n", width, height)?;
+    writeln!(writer, "{} {}", width, height)?;
     writer.write_all(b"255\n")?;
 
     for j in 0..height {
@@ -106,7 +106,7 @@ fn write_image(width: u16, height: u16, data: &Vec<u8>, path: &PathBuf) -> anyho
             let r = data[index];
             let g = data[index + 1];
             let b = data[index + 2];
-            write!(writer, "{} {} {}\n", r, g, b)?;
+            writeln!(writer, "{} {} {}", r, g, b)?;
         }
     }
 
