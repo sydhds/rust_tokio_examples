@@ -28,7 +28,7 @@ fn main() {
     // increment count
     let mut count = 0;
     println!("count value: {}", count);
-    // mutable closure as count is passded as &mut
+    // mutable closure as count is passed as &mut
     let mut inc_count = || count += 1;
     inc_count();
     println!("after increment: {}", count);
