@@ -393,7 +393,7 @@ fn read_segments(
 ) -> IResult<&[u8], Vec<JpegSegment>, JpegParseSegmentsError<&[u8]>> {
     // Note: should compute max "number of segment to read" according to file size (with a max file size allowed)
     //       as segment_size is u16
-    // Note 2: not all segment types are supported but it can read this jpeg image:
+    // Note 2: not all segment types are supported, but it can read this jpeg image:
     //         https://upload.wikimedia.org/wikipedia/commons/3/3f/JPEG_example_flower.jpg
     many_m_n(0, 32, read_segment)(content)
     // Note: based on the many_m_n result, we could do some additional checks like:

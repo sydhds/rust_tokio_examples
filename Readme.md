@@ -120,6 +120,9 @@ OR:
 * rust_crate_nom_01: how to parse a jpeg file (binary file) using [nom](https://docs.rs/nom/latest/nom/)
     * wget https://upload.wikimedia.org/wikipedia/commons/3/3f/JPEG_example_flower.jpg
     * cargo run -- JPEG_example_flower.jpg
+    * Examples:
+        * nom_ref: nom [length count](https://docs.rs/nom/latest/nom/multi/fn.length_count.html) + zero copy read
+        * context: nom [context](https://docs.rs/nom/latest/nom/error/fn.context.html)
 
 * rust_crate_rayon_01:
     * generate a ppm image and use rayon to process image data in // using [rayon](https://docs.rs/rayon/latest/rayon/)
