@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 rayon = "1.8"
-anyhow = "1.0.80"
+anyhow = "1.0"
