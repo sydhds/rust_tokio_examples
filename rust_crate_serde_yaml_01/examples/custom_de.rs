@@ -23,6 +23,7 @@ struct Example {
 
  */
 
+#[allow(dead_code)]
 #[derive(Debug)]
 enum AnEnum {
     A(i32),

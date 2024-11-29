@@ -47,14 +47,18 @@ fn main() {
     let s_yml1 = "field_above_2: 2\nvec_non_empty:\n  - 2\n  - 3\n";
     let s_yml2 = "field_above_2: 3\nvec_non_empty:\n";
 
-    let s1: Struct = serde_yaml::from_str(&s_yml0).unwrap();
-    println!("s1: {:?}", s1);
+    let s1: Struct = serde_yaml::from_str(s_yml0).unwrap();
+    // println!("s1: {:?}", s1);
+    println!(
+        "s1: field_above_2: {}, vec_non_empty: {:?}",
+        s1.field_above_2, s1.vec_non_empty
+    );
 
     // This will return an error -> value 2 is rejected
-    let s2: Result<Struct, serde_yaml::Error> = serde_yaml::from_str(&s_yml1);
+    let s2: Result<Struct, serde_yaml::Error> = serde_yaml::from_str(s_yml1);
     println!("s2: {:?}", s2);
 
     // This will return an error -> empty vec is rejected
-    let s3: Result<Struct, serde_yaml::Error> = serde_yaml::from_str(&s_yml2);
+    let s3: Result<Struct, serde_yaml::Error> = serde_yaml::from_str(s_yml2);
     println!("s3: {:?}", s3);
 }

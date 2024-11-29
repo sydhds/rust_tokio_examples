@@ -13,12 +13,12 @@ enum Config {
 fn main() {
     // SE
 
-    let foo = Config::FooConfig { field1: 32 };
-    let bar = Config::BarConfig {
+    let foo_cfg = Config::FooConfig { field1: 32 };
+    let bar_cfg = Config::BarConfig {
         field1: 78512u64,
         field2: "Let's go!".to_string(),
     };
-    let l0 = vec![foo, bar];
+    let l0 = vec![foo_cfg, bar_cfg];
     let s: String = serde_yaml::to_string(&l0).unwrap();
     println!("s: {}", s);
 
@@ -31,12 +31,12 @@ fn main() {
     let s_yml3 =
         "- cfg: FooConfig\n  field1: 23\n- cfg: FooConfig\n  field1: 43\n- cfg: BarConfig2\n  field1: 11\n  field2: ye";
 
-    let s0: Vec<Config> = serde_yaml::from_str(&s_yml0).unwrap();
+    let s0: Vec<Config> = serde_yaml::from_str(s_yml0).unwrap();
     println!("s0: {:?}", s0);
-    let s1: Vec<Config> = serde_yaml::from_str(&s_yml1).unwrap();
+    let s1: Vec<Config> = serde_yaml::from_str(s_yml1).unwrap();
     println!("s1: {:?}", s1);
-    let s2: Vec<Config> = serde_yaml::from_str(&s_yml2).unwrap();
+    let s2: Vec<Config> = serde_yaml::from_str(s_yml2).unwrap();
     println!("s2: {:?}", s2);
-    let s3: Result<Vec<Config>, serde_yaml::Error> = serde_yaml::from_str(&s_yml3);
+    let s3: Result<Vec<Config>, serde_yaml::Error> = serde_yaml::from_str(s_yml3);
     println!("s3: {:?}", s3);
 }

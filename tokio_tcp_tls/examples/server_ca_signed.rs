@@ -1,4 +1,5 @@
-// use core::fmt::Debug;
+#![allow(clippy::bind_instead_of_map)]
+
 use rustls::ServerConfig;
 use std::env;
 use std::fs::File;

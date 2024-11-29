@@ -1,27 +1,25 @@
-use std::pin::Pin;
 use std::future::Future;
+use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Duration;
 
 // an attempt to implement a SlowReader that implement the AsyncRead trait
 
+use futures::FutureExt;
 use tokio::io::{AsyncRead, ReadBuf}; // trait: AsyncRead
-use tokio::time::Instant;
-use futures::FutureExt; // allow poll_unpin()
+use tokio::time::Instant; // allow poll_unpin()
 
 // Almost the same as SlowRead2 in main.rs
 
 struct SlowRead2<R> {
-    // reader: Pin<Box<R>>,
     reader: R,
-    sleep: Pin<Box<tokio::time::Sleep>>
+    sleep: Pin<Box<tokio::time::Sleep>>,
 }
 
 impl<R> SlowRead2<R> {
     fn new(reader: R) -> Self {
         Self {
-            // reader: Box::pin(reader),
-            reader: reader,
+            reader,
             sleep: Box::pin(tokio::time::sleep(Default::default())),
         }
     }
@@ -29,27 +27,33 @@ impl<R> SlowRead2<R> {
 
 // Note: restrict R to AsyncRead + Unpin (as recommanded by the compiler
 // In our example, tokio::fs::File does implement Unpin
-impl<R> AsyncRead for SlowRead2<R> where R: AsyncRead + Unpin {
-
-    fn poll_read(mut self: Pin<&mut Self>, cx: &mut Context<'_>, buf: &mut ReadBuf<'_>) -> Poll<std::io::Result<()>> {
-
+impl<R> AsyncRead for SlowRead2<R>
+where
+    R: AsyncRead + Unpin,
+{
+    fn poll_read(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<std::io::Result<()>> {
         match self.sleep.poll_unpin(cx) {
-            Poll::Ready(_) => { // sleep completes
+            Poll::Ready(_) => {
+                // sleep completes
 
-                self.sleep.
-                    as_mut()
+                self.sleep
+                    .as_mut()
                     .reset(Instant::now() + Duration::from_millis(25));
 
                 // self.reader.as_mut().poll_read(cx, buf) // Poll the reader // does not work if reader is not wrapped in Box::pin
                 Pin::new(&mut self.reader).poll_read(cx, buf) // recommandation from the compiler
-            },
-            Poll::Pending => { // sleep has not completed yet
+            }
+            Poll::Pending => {
+                // sleep has not completed yet
                 Poll::Pending
-            },
+            }
         }
     }
 }
-
 
 // SlowRead3 cannot compile: SlowRead3 does not impl Unpin (because field: sleep does not impl Unpin)
 // If SlowRead3 does not impl Unpin: cannot do Pin::new(&mut self.reader)
@@ -102,29 +106,36 @@ struct SlowRead4<R> {
 impl<R> SlowRead4<R> {
     fn new(reader: R) -> Self {
         Self {
-            reader: reader,
+            reader,
             sleep: tokio::time::sleep(Default::default()),
         }
     }
 }
 
-impl<R> AsyncRead for SlowRead4<R> where R: AsyncRead + Unpin {
-
-    fn poll_read(mut self: Pin<&mut Self>, cx: &mut Context<'_>, buf: &mut ReadBuf<'_>) -> Poll<std::io::Result<()>> {
-
+impl<R> AsyncRead for SlowRead4<R>
+where
+    R: AsyncRead + Unpin,
+{
+    fn poll_read(
+        mut self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<std::io::Result<()>> {
         let sleep = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.sleep) };
 
         match sleep.poll(cx) {
-            Poll::Ready(_) => { // sleep completes
+            Poll::Ready(_) => {
+                // sleep completes
                 let sleep = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.sleep) };
                 sleep.reset(Instant::now() + Duration::from_millis(25));
                 // Pin::new(&mut self.reader).poll_read(cx, buf)
                 let reader = unsafe { self.as_mut().map_unchecked_mut(|this| &mut this.reader) };
                 reader.poll_read(cx, buf)
-            },
-            Poll::Pending => { // sleep has not completed yet
+            }
+            Poll::Pending => {
+                // sleep has not completed yet
                 Poll::Pending
-            },
+            }
         }
     }
 }
@@ -138,16 +149,21 @@ struct SlowRead5<R> {
 impl<R> SlowRead5<R> {
     fn new(reader: R) -> Self {
         Self {
-            reader: reader,
+            reader,
             sleep: tokio::time::sleep(Default::default()),
         }
     }
 }
 
-impl<R> AsyncRead for SlowRead5<R> where R: AsyncRead + Unpin {
-
-    fn poll_read(self: Pin<&mut Self>, cx: &mut Context<'_>, buf: &mut ReadBuf<'_>) -> Poll<std::io::Result<()>> {
-
+impl<R> AsyncRead for SlowRead5<R>
+where
+    R: AsyncRead + Unpin,
+{
+    fn poll_read(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<std::io::Result<()>> {
         let (mut sleep, reader) = unsafe {
             let this = self.get_unchecked_mut();
             (
@@ -157,13 +173,15 @@ impl<R> AsyncRead for SlowRead5<R> where R: AsyncRead + Unpin {
         };
 
         match sleep.as_mut().poll(cx) {
-            Poll::Ready(_) => { // sleep completes
+            Poll::Ready(_) => {
+                // sleep completes
                 sleep.reset(Instant::now() + Duration::from_millis(25));
                 reader.poll_read(cx, buf)
-            },
-            Poll::Pending => { // sleep has not completed yet
+            }
+            Poll::Pending => {
+                // sleep has not completed yet
                 Poll::Pending
-            },
+            }
         }
     }
 }
@@ -183,16 +201,21 @@ struct SlowRead6<R> {
 impl<R> SlowRead6<R> {
     fn new(reader: R) -> Self {
         Self {
-            reader: reader,
+            reader,
             sleep: tokio::time::sleep(Default::default()),
         }
     }
 }
 
-impl<R> AsyncRead for SlowRead6<R> where R: AsyncRead + Unpin {
-
-    fn poll_read(self: Pin<&mut Self>, cx: &mut Context<'_>, buf: &mut ReadBuf<'_>) -> Poll<std::io::Result<()>> {
-
+impl<R> AsyncRead for SlowRead6<R>
+where
+    R: AsyncRead + Unpin,
+{
+    fn poll_read(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<std::io::Result<()>> {
         // project() will return a:
         // struct SlowReadProjected<'a, R> {
         //   reader: Pin<&'a mut R>,
@@ -201,13 +224,15 @@ impl<R> AsyncRead for SlowRead6<R> where R: AsyncRead + Unpin {
         let mut this = self.project();
 
         match this.sleep.as_mut().poll(cx) {
-            Poll::Ready(_) => { // sleep completes
+            Poll::Ready(_) => {
+                // sleep completes
                 this.sleep.reset(Instant::now() + Duration::from_millis(25));
                 this.reader.poll_read(cx, buf)
-            },
-            Poll::Pending => { // sleep has not completed yet
+            }
+            Poll::Pending => {
+                // sleep has not completed yet
                 Poll::Pending
-            },
+            }
         }
     }
 }
@@ -223,9 +248,10 @@ struct TimedFuture<F> {
 }
 
 impl<F> TimedFuture<F> {
-
-    fn new(f: F) -> Self where F: Future {
-
+    fn new(f: F) -> Self
+    where
+        F: Future,
+    {
         TimedFuture {
             fut: Box::pin(f),
             start: None,
@@ -238,7 +264,6 @@ impl<F: Future> Future for TimedFuture<F> {
     type Output = (F::Output, tokio::time::Duration);
 
     fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-
         self.start.get_or_insert_with(tokio::time::Instant::now);
         // println!("self.start: {:?}", self.start);
 
@@ -257,13 +282,10 @@ impl<F: Future> Future for TimedFuture<F> {
             Poll::Ready(o) => {
                 println!("[f] self.start: {:?}", self.start);
                 Poll::Ready(
-                    (o, self.start.unwrap().elapsed())
-                    //(o, start.elapsed())
+                    (o, self.start.unwrap().elapsed()), //(o, start.elapsed())
                 )
-            },
-            Poll::Pending => {
-                Poll::Pending
-            },
+            }
+            Poll::Pending => Poll::Pending,
         }
     }
 }
@@ -276,9 +298,10 @@ struct TimedFuture2<F> {
 }
 
 impl<F> TimedFuture2<F> {
-
-    fn new(f: F) -> Self where F: Future {
-
+    fn new(f: F) -> Self
+    where
+        F: Future,
+    {
         TimedFuture2 {
             fut: f,
             start: None,
@@ -289,20 +312,13 @@ impl<F> TimedFuture2<F> {
 impl<F: Future> Future for TimedFuture2<F> {
     type Output = (F::Output, tokio::time::Duration);
 
-    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-
+    fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
         let mut this = self.project();
         this.start.get_or_insert_with(tokio::time::Instant::now);
 
         match this.fut.as_mut().poll(cx) {
-            Poll::Ready(o) => {
-                Poll::Ready(
-                    (o, this.start.unwrap().elapsed())
-                )
-            },
-            Poll::Pending => {
-                Poll::Pending
-            },
+            Poll::Ready(o) => Poll::Ready((o, this.start.unwrap().elapsed())),
+            Poll::Pending => Poll::Pending,
         }
     }
 }
@@ -313,7 +329,6 @@ type AFnError = Box<dyn std::error::Error + Send + Sync>;
 type AFnResult<T> = Result<T, AFnError>;
 
 async fn app_slow_read() -> AFnResult<()> {
-
     let bufsize = 128 * 1024;
     let mut buf = vec![0u8; bufsize];
 
@@ -343,21 +358,21 @@ async fn app_slow_read() -> AFnResult<()> {
     let elapsed = start.elapsed();
     println!("4-1- Slow'Read5 {} bytes in {:?}", buf.len(), elapsed);
 
-    let mut f = SlowRead5::new(File::open("/dev/urandom").await?);
+    let f = SlowRead5::new(File::open("/dev/urandom").await?);
     let start = tokio::time::Instant::now();
     pin_utils::pin_mut!(f); // use pin-utils crate: pin an owned value to the stack, shadowing its previous name
     f.read_exact(&mut buf).await?;
     let elapsed = start.elapsed();
     println!("4-2- Slow'Read5 {} bytes in {:?}", buf.len(), elapsed);
 
-    let mut f = SlowRead5::new(File::open("/dev/urandom").await?);
+    let f = SlowRead5::new(File::open("/dev/urandom").await?);
     let start = tokio::time::Instant::now();
     tokio::pin!(f); // same as when we wre using pin_utils but this time with the macro from tokio
     f.read_exact(&mut buf).await?;
     let elapsed = start.elapsed();
     println!("4-3- Slow'Read5 {} bytes in {:?}", buf.len(), elapsed);
 
-    let mut f = SlowRead5::new(File::open("/dev/urandom").await?);
+    let f = SlowRead5::new(File::open("/dev/urandom").await?);
     let start = tokio::time::Instant::now();
     let mut f = Box::pin(f); // same but Box::pin the whole SlowRead to the heap
     f.read_exact(&mut buf).await?;
@@ -374,26 +389,21 @@ async fn app_slow_read() -> AFnResult<()> {
     f.read_exact(&mut buf).await?; // reuse File here
     println!("4-5- Slow'Read5 {} bytes in {:?}", buf.len(), elapsed);
 
-    let mut f = SlowRead6::new(File::open("/dev/urandom").await?);
+    let f = SlowRead6::new(File::open("/dev/urandom").await?);
     let start = tokio::time::Instant::now();
     let mut f = Box::pin(f); // same but Box::pin the whole SlowRead to the heap
     f.read_exact(&mut buf).await?;
     let elapsed = start.elapsed();
     println!("5- Slow'Read6 {} bytes in {:?}", buf.len(), elapsed);
 
-
     // timed future
 
-    let tf = TimedFuture::new(
-        tokio::time::sleep(tokio::time::Duration::from_secs(1)),
-    );
+    let tf = TimedFuture::new(tokio::time::sleep(tokio::time::Duration::from_secs(1)));
     println!("tf: {:?}", tf);
     let tf_res = tf.await;
     println!("tf result: {:?}", tf_res);
 
-    let tf2 = TimedFuture2::new(
-        tokio::time::sleep(tokio::time::Duration::from_secs(1)),
-    );
+    let tf2 = TimedFuture2::new(tokio::time::sleep(tokio::time::Duration::from_secs(1)));
     // println!("tf2: {:?}", tf2);
     let tf2_res = tf2.await;
     println!("tf2 result: {:?}", tf2_res);
@@ -409,5 +419,5 @@ fn main() {
         .build()
         .unwrap();
 
-    rt.block_on(app_slow_read());
+    rt.block_on(app_slow_read()).unwrap();
 }

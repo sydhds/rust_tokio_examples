@@ -4,6 +4,14 @@ pub fn sub(x: &i32, y: &i32) -> i32 {
     x - y
 }
 
+fn main() {
+    println!("Hello, world!");
+    let a = 2;
+    let b = 2;
+    println!("Computing: {} + {} = {}", a, b, add(&a, &b));
+    println!("Computing: {} - {} = {}", a, b, sub(&a, &b));
+}
+
 #[cfg(test)]
 mod tests {
 
@@ -33,12 +41,4 @@ mod tests {
         let b = true;
         assert!(b);
     }
-}
-
-fn main() {
-    println!("Hello, world!");
-    let a = 2;
-    let b = 2;
-    println!("Computing: {} + {} = {}", a, b, add(&a, &b));
-    println!("Computing: {} - {} = {}", a, b, sub(&a, &b));
 }

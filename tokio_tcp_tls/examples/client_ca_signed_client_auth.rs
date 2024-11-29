@@ -1,3 +1,5 @@
+#![allow(clippy::bind_instead_of_map)]
+
 use std::error::Error;
 use std::sync::Arc;
 // use std::time::SystemTime;

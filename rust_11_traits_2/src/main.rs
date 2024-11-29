@@ -121,6 +121,7 @@ fn main() {
 // Advanced (downcast_ref)
 
 trait Animal2 {
+    #[allow(dead_code)]
     fn noise(&self) -> String;
 
     fn as_any(&self) -> &dyn Any;

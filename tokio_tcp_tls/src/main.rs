@@ -1,3 +1,5 @@
+#![allow(clippy::bind_instead_of_map)]
+
 use std::env;
 use std::fs::File;
 use std::io::BufReader;

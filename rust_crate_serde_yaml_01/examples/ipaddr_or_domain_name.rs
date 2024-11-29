@@ -38,7 +38,7 @@ impl TryFrom<HashMap<String, String>> for Hostname {
             };
         }
 
-        return Err("Unable to retrieve hostname");
+        Err("Unable to retrieve hostname")
     }
 }
 
@@ -61,16 +61,16 @@ fn main() {
 
     // 1 Hostname
     let s_yml0 = "hostname: 127.0.0.1";
-    let s1: Hostname = serde_yaml::from_str(&s_yml0).unwrap();
+    let s1: Hostname = serde_yaml::from_str(s_yml0).unwrap();
     println!("s1: {:?}", s1);
 
     // A dict[key, Hostname]
     let s_yml1 = "---\ninterface0:\n  hostname: 127.0.0.1\ninterface1:\n  hostname: foo.com\ninterface2:\n  hostname: ::1";
-    let s2: HashMap<String, Hostname> = serde_yaml::from_str(&s_yml1).unwrap();
+    let s2: HashMap<String, Hostname> = serde_yaml::from_str(s_yml1).unwrap();
     println!("s2: {:?}", s2);
 
     // An invalid "Hostname" in yaml
     let s_yml2 = "---\ninterface0:\n  hostnam: 127.0.0.1\ninterface1:\n  hostname: foo.com";
-    let s3: Result<HashMap<String, Hostname>, serde_yaml::Error> = serde_yaml::from_str(&s_yml2);
+    let s3: Result<HashMap<String, Hostname>, serde_yaml::Error> = serde_yaml::from_str(s_yml2);
     println!("s3: {:?}", s3);
 }

@@ -41,7 +41,7 @@ async fn handle_conn(mut sock: TcpStream, buffer_len: usize) {
 
         // And then write back to our client
         // Note: This method is not cancellation safe. Do not use in tokio::select!
-        if let Err(e) = writer.write_all(&to_write[..]).await {
+        if let Err(e) = writer.write_all(to_write).await {
             println!("Write error: {}", e);
             break;
         }

@@ -42,9 +42,9 @@ fn main() {
     let chunked_data = data.split_whitespace();
     // println!("chunked_data: {:?}", chunked_data);
 
-    for (_i, chunk) in chunked_data.enumerate() {
+    for (i, chunk) in chunked_data.enumerate() {
         threads_2.push(thread::spawn(move || -> u32 {
-            // println!("Handling chunk {}: {}", i, chunk);
+            println!("Handling chunk {}: {}", i, chunk);
             let result: u32 = chunk
                 .chars()
                 .map(|c| c.to_digit(10).expect("Should be a digit"))
@@ -54,6 +54,7 @@ fn main() {
         }));
     }
 
+    // Wait for all threads to finish
     // let final_result = threads_2.into_iter().map(|t| t.join().unwrap()).sum::<u32>();
     let final_result: u32 = threads_2.into_iter().map(|t| t.join().unwrap()).sum();
     println!("Final result: {}", final_result);

@@ -1,4 +1,4 @@
-#[allow(clippy::useless_vec)]
+#![allow(clippy::useless_vec)]
 
 fn main() {
     let _identity_closure = |x: i32| x;

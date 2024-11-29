@@ -44,7 +44,7 @@ impl Character {
 }
 
 fn create_wizard() -> Character {
-    return Character::create_wizard("Merlin".to_string(), "The Wizard".to_string(), 500);
+    Character::create_wizard("Merlin".to_string(), "The Wizard".to_string(), 500)
 }
 
 fn main() {
@@ -69,11 +69,11 @@ fn main() {
     };
 
     hero1.attacked(&bad_guy_1);
-    println!("Is hero1 {} dead?: {}", hero1.first_name, hero1.is_dead());
+    println!("Is hero1 {} dead?: {}", hero1.get_name(), hero1.is_dead());
     hero1.attacked(&bad_guy_1);
-    println!("Is hero1 {} dead?: {}", hero1.first_name, hero1.is_dead());
+    println!("Is hero1 {} dead?: {}", hero1.get_name(), hero1.is_dead());
     hero1.attacked(&bad_guy_1);
-    println!("Is hero1 {} dead?: {}", hero1.first_name, hero1.is_dead());
+    println!("Is hero1 {} dead?: {}", hero1.get_name(), hero1.is_dead());
 
     let wz1 = create_wizard();
     println!("wz1: {:?}", wz1);

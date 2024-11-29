@@ -42,10 +42,7 @@ fn main() {
         "Calling take_range_4 on r2: {}",
         take_range_4(r2.clone(), 4)
     );
-    println!(
-        "Calling take_range_4 on r3: {}",
-        take_range_4(r3.clone(), 4)
-    );
+    println!("Calling take_range_4 on r3: {}", take_range_4(r3, 4));
     println!(
         "Calling take_range_4 on another range: {}",
         take_range_4(0..7u64, 4)

@@ -1,7 +1,7 @@
-use flume;
+#![allow(dead_code)]
+
 use futures::pin_mut;
-use futures::stream::{self, StreamExt};
-use rand::Rng;
+use futures::stream::StreamExt;
 
 // cargo run --example flume_peek
 
@@ -15,8 +15,6 @@ struct Message {
 const MESSAGE_COUNT: u32 = 9;
 
 async fn feed_queue(tx: flume::Sender<Message>) {
-    //todo!()
-
     let mut m = Message {
         foo: "feed_queue".into(),
         bar: 0,
@@ -26,7 +24,7 @@ async fn feed_queue(tx: flume::Sender<Message>) {
     for i in 0..MESSAGE_COUNT {
         // println!("i: {}", i);
         let m_ = m.clone();
-        tx.send_async(m_).await;
+        let _ = tx.send_async(m_).await;
         println!("Just sent a msg with index: {:?}", i);
         //tokio::time::sleep(tokio::time::Duration::from_millis(150)).await;
         //tokio::time::sleep(tokio::time::Duration::from_millis(150)).await;
@@ -83,7 +81,7 @@ async fn app_main() {
     let c1 = tokio::spawn(feed_queue(tx));
     let c2 = tokio::spawn(sink_queue(rx));
 
-    let res = tokio::join!(c1, c2);
+    let _res = tokio::join!(c1, c2);
 
     println!("rx size: {}", rx_.len());
 }

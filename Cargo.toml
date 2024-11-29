@@ -47,7 +47,7 @@ members = [
     "tokio_async_common_mistakes",
     # tokio crate examples
     "tokio_crate_loom_01",
-    "tokio_crate_codec_01",
+    # "tokio_crate_codec_01",
     "tokio_tcp_tls",
     # hyper examples
     # "hyper_01_http_post",

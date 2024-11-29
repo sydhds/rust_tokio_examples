@@ -37,6 +37,12 @@ impl Tracing {
     }
 }
 
+impl Default for Tracing {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[derive(Clone, Copy, Serialize, Deserialize)]
 pub enum Event {
     Alloc { addr: usize, size: usize },
