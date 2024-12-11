@@ -38,6 +38,7 @@ members = [
     "rust_crate_thiserror_anyhow_01",
     "rust_crate_nom_01",
     "rust_crate_rayon_01",
+    "rust_crate_mockall_01",
     # rust misc examples
     "rustgdb_1",
     # tokio examples
@@ -48,7 +49,7 @@ members = [
     # tokio crate examples
     "tokio_crate_loom_01",
     # "tokio_crate_codec_01",
-    "tokio_tcp_tls",
+    "tokio_tcp_tls", "rust_crate_mockall_lib",
     # hyper examples
     # "hyper_01_http_post",
 ]

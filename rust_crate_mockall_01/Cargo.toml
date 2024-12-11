@@ -1,0 +1,19 @@
+[package]
+name = "rust_crate_mockall_01"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+faux = []
+
+[dependencies]
+function_name = "0.3"
+# mockall = "0.13.1"
+# for mock_struct example
+rust_crate_mockall_lib = { path = "../rust_crate_mockall_lib" }
+
+[dev-dependencies]
+mockall = "0.13.1"
+# for mock_struct example
+rust_crate_mockall_lib = { path = "../rust_crate_mockall_lib", features = ["faux"] }
+faux = "0.1"

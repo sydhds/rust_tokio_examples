@@ -152,6 +152,16 @@ OR:
             * Generate report:
                 * ../target/debug/rust_crate_small_strings_01 report events.ldjson
 
+* rust_crate_mockall_01:
+    * mock trait using [mockall](https://docs.rs/mockall/latest/mockall/) and struct
+      using [faux](https://github.com/nrxus/faux)
+    * mock trait:
+        * cargo run
+        * cargo test -- --nocapture
+    * mock struct:
+        * cargo run --example mock_struct
+        * cargo test --example mock_struct --features faux -- --nocapture
+
 ## Misc
 
 * rustgdb_1: Debug rust program using rust-gdb
