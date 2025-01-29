@@ -1,5 +1,6 @@
 #![allow(clippy::bool_assert_comparison)]
 
+use nom::Parser;
 use std::env;
 use std::io::Read;
 use std::process;
@@ -20,7 +21,7 @@ use nom::IResult;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    if args.is_empty() {
+    if args.len() == 1 {
         println!("Please provide a jpeg file path to read...");
         process::exit(1);
     }
@@ -105,7 +106,8 @@ fn take_soi(content: &[u8]) -> IResult<&[u8], bool> {
     // Take 2 bytes and check if these 2 bytes (aka segment_id) is valid JPEG start
     map(take(2usize), |segment_id: &[u8]| {
         segment_id[0] == 0xFF && segment_id[1] == 0xD8
-    })(content)
+    })
+    .parse(content)
 }
 
 #[derive(Debug, PartialEq)]
@@ -395,7 +397,7 @@ fn read_segments(
     //       as segment_size is u16
     // Note 2: not all segment types are supported, but it can read this jpeg image:
     //         https://upload.wikimedia.org/wikipedia/commons/3/3f/JPEG_example_flower.jpg
-    many_m_n(0, 32, read_segment)(content)
+    many_m_n(0, 32, read_segment).parse(content)
     // Note: based on the many_m_n result, we could do some additional checks like:
     // * start with SOI, end with SOI
     // * not too many COM?

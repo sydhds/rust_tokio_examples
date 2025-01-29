@@ -115,7 +115,7 @@ impl Deserializer<Task> for TaskDeserializer {
                 context("Fail Task.id de", |input| le_u64(input)),
                 context("Fail Task.index de", |input| be_u16(input)),
                 context("Fail Task.name", |input: &'a [u8]| {
-                    let (input, data) = length_data(le_u64)(input)?;
+                    let (input, data) = length_data(le_u64).parse(input)?;
                     #[rustfmt::skip]
                     let data = String::from_utf8(data.to_vec())
                         .map_err(|e| {

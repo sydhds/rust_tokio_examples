@@ -3,6 +3,7 @@ use nom::combinator::map;
 use nom::multi::length_count;
 use nom::number::complete::be_u16;
 use nom::IResult;
+use nom::Parser;
 
 #[derive(Debug)]
 struct DoubleU16<'a> {
@@ -17,6 +18,7 @@ struct ListU16<'a> {
 
 fn main() {
     {
+        println!("read_double_u16...");
         let bytes = vec![0, 1, 3, 0, 4, 2, 4, 2];
         let (res, d) = read_double_u16(bytes.as_slice()).unwrap();
         println!("d: {:?}", d);
@@ -27,6 +29,7 @@ fn main() {
     }
 
     {
+        println!("read_list_u16...");
         let bytes = vec![0, 3, 0, 2, 0, 8, 0, 4];
         let (res, l) = read_list_u16(bytes.as_slice()).unwrap();
         println!("l: {:?}", l);
@@ -35,8 +38,8 @@ fn main() {
         assert!(res.is_empty());
         assert_eq!(l.l.len(), 3);
         assert_eq!(l.l[0], &[0, 2]);
-        assert_eq!(l.l[0], &[0, 8]);
-        assert_eq!(l.l[0], &[0, 4]);
+        assert_eq!(l.l[1], &[0, 8]);
+        assert_eq!(l.l[2], &[0, 4]);
     }
 }
 
@@ -61,7 +64,7 @@ fn read_list_u16(content: &[u8]) -> IResult<&[u8], ListU16> {
                 take(2usize), // read elements as &[u8] 
                 |r: &[u8]| r.try_into().unwrap() // &[u8] -> &[u8; 2]
             )
-        )(content)?;
+        ).parse(content)?;
     let l = ListU16 { l: res };
     Ok((content, l))
 }
