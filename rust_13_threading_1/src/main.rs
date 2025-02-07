@@ -16,11 +16,30 @@ fn main() {
 
     // Note: this is fixed here
 
-    println!("Now using multiple threads...");
+    println!("#### Now using multiple threads:");
+    let mut threads = vec![]; // where we store threads
+    for _i in 1..10 {
+        threads.push(thread::spawn(my_function));
+    }
+
+    // wait for all thread
+    for t in threads {
+        let _ = t.join();
+    }
+
+    // Same but with a closure
+
+    println!("#### Now using multiple threads 2:");
     let mut threads = vec![]; // where we store threads
     for i in 1..10 {
+        // Note: `move` is needed as the closure need to capture i
+        // Note 2: cannot pass a reference to i because thread::spawn requires 'static ref
         threads.push(thread::spawn(move || {
-            println!("Hello world from thread {} {:?}", i, thread::current().id());
+            println!(
+                "Hello world from thread: {:?}, i: {}",
+                thread::current().id(),
+                i
+            );
             // this requires to use an unstable feature -> and unstable rust?
             // println!("Hello world from thread {} {}", i, thread::current().id().as_u64());
             thread::sleep(Duration::from_millis(1));
@@ -34,7 +53,7 @@ fn main() {
 
     // map reduce with threads example
 
-    println!("Map reduce with threads...");
+    println!("#### Map reduce with threads:");
 
     let mut threads_2 = vec![]; // where we store threads
     let data = "1981 6516 7436 6131 3215";
@@ -61,4 +80,9 @@ fn main() {
 
     let v = [1, 9, 8, 1, 6, 5, 1, 6, 7, 4, 3, 6, 6, 1, 3, 1, 3, 2, 1, 5];
     assert_eq!(final_result, v.iter().sum());
+}
+
+fn my_function() {
+    println!("Hello world from thread: {:?}", thread::current().id());
+    thread::sleep(Duration::from_millis(1));
 }

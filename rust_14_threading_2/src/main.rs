@@ -3,7 +3,9 @@ use std::sync::mpsc::{Receiver, Sender};
 use std::thread;
 
 fn main() {
-    // let (tx, rx) = mpsc::channel();
+    // Communicating between threads using a channel (MPSC: Multi producer - Single consumer)
+    // Here we have our threads sending data to our main thread using a channel
+
     let (tx, rx): (Sender<String>, Receiver<String>) = mpsc::channel(); // type anno is not mandatory
 
     let t = thread::spawn(move || {
